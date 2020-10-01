@@ -15,7 +15,7 @@ body {
     ?>
 
     <div align="center" style="height: fit-content; padding-top:40px;">
-        <h4>Oops. Its like this page is not available at the moment.</h4>
+        <h4>Oops. Its like this page is not available at the moment. Please see link below.</h4>
         <a href="index.php">
             <p style="color: blue;">Back to Home</p>
         </a>
