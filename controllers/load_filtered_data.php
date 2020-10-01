@@ -4,7 +4,7 @@
     if(isset($_POST['action'])) {
         $sql = "SELECT * FROM products WHERE product_brand != ''";
 
-        // Filter Shop by Category
+        // Filter search by category
         if(isset($_POST['category'])) {
             $category = implode("','", $_POST['category']);
             $sql .= "AND product_category IN('".$category."')";
@@ -80,3 +80,4 @@
         $output = "<h3>No Product Found!</h3>";
     }
     echo $output;
+?>

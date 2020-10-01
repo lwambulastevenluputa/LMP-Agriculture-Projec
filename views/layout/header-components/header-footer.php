@@ -1,8 +1,13 @@
 <div class="header-bottom"><!--header-bottom-->
 	<div class="container">
         <ul class="unstyled categories-link d-flex justify-content-center">
-            <li><a href="#">Chat</a></li>
-			<li><a href="#">Contacts</a></li>
+            <?php 
+if(isset($_SESSION['mobilenumber'])){ ?>
+            <li><a href="#" onclick="document.getElementById('drawerbg').style.display='';document.getElementById('drawer1').style.display='';">Chat</a></li>
+			<li><a href="#" onclick="document.getElementById('drawerbg').style.display='';document.getElementById('drawer2').style.display='';document.getElementById('drawer3').style.display='';">Contacts</a></li>
+			<?php
+}
+?>
             <li><a href="#">Vendors</a></li>
             <li><a href="#">Fruits & Vegetables</a></li>
             <li><a href="#">Livestock</a></li>

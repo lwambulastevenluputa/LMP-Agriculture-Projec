@@ -1,4 +1,6 @@
 <?php 
+// session_start();
+$uphone=$_SESSION['mobilenumber'];
 
     // create a database connection
     include 'database/connect.php';
@@ -26,8 +28,8 @@
         move_uploaded_file($_FILES["pImage"]["tmp_name"], $target_file);
 
         // procedural
-        $insert_product = "INSERT INTO products (product_name, product_description, product_image, product_price, product_category, product_brand, product_code, product_seller, currency, stock, product_condition, shipping_type, provinces, cities_towns) 
-            VALUES ('$p_name', '$p_desc', '$target_file', '$p_price', '$p_category', '$p_brand','$p_code', '$p_seller', '$p_currency', '$p_stock', '$p_condition', '$shipping_type', '$province', '$city')";
+        $insert_product = "INSERT INTO products (product_name, product_description, product_image, product_price, product_category, product_brand, product_code, product_seller, currency, stock, product_condition, shipping_type, provinces, cities_towns, username) 
+            VALUES ('$p_name', '$p_desc', '$target_file', '$p_price', '$p_category', '$p_brand','$p_code', '$p_seller', '$p_currency', '$p_stock', '$p_condition', '$shipping_type', '$province', '$city', '$uphone')";
 
         if(mysqli_query($conn, $insert_product)) {
             $msg = '<b class="text-success"> Product Added to the database successfully </b>';
@@ -40,5 +42,3 @@
 
     // $back_to_add_product_form = "location: ../add_product.php?msg=". $msg;
     // header($back_to_add_product_form);
-
-?>

@@ -13,12 +13,20 @@
                       <span class="navbar-toggler-icon"></span>
                     </button>
 
+			        
+
 			        <div class="search__box">
-                        <!-- <input type="text" placeholder="Search"/> -->
-                        <form class="form-inline my-2 my-lg-0">
-                            <input class="form-control mr-sm-2" style="width: 350px;" type="search" placeholder="Search" aria-label="Search">
-                            <!-- <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button> -->
-                        </form>
+                      
+<table style="width:100%; text-align:center; font-size:16px; color:#000; height:30px; border:1px #555 solid; outline:none; background:#fff; border-collapse:seperate; border-radius:10px">
+    <tr align="center">
+        <td style="width:85%">
+<input type="text" id="inputsearchterm" onkeyup="loadsearch(<?php echo $accountuser; ?>)" placeholder="Search Store" style="width:100%; border-radius:4px; text-align:left; font-size:14px; color:#000; height:30px; border:none; outline:none"/>
+</td>
+        <td style="width:15%; color:#f90" onclick="loadsearch(<?php echo $accountuser; ?>)">    
+        <i class="far fa-search fa-sm"></i> 
+</td>
+    </tr>
+</table>
 			        </div>
 
                     <div class="" id="navbarSupportedContent" >

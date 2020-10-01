@@ -7,9 +7,20 @@
     Admin dashboard
     2. list all products added by the loged-in seller (product image, title, price and status only)
     3. The last column shall be "actions" : delete(product-delete.php) & update(product-update.php) product link
+    
+    0975651046
  -->
-
+ 
 <?php 
+    session_start();
+
+    // Check if the user is logged in, if not then redirect him to login page
+    if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
+        // echo $_SESSION["loggedin"];
+        header("location: signin.php");
+        exit;
+    }
+
     // create a database connection
     include 'database/connect.php';     
     // import views
@@ -27,7 +38,7 @@
                             <li class="breadcrumb-item active">Dashboard</li>
                         </ol>
                         <div class="row">
-                            <div class="col-xl-3 col-md-6">
+                            <!-- <div class="col-xl-3 col-md-6">
                                 <div class="card bg-primary text-white mb-4">
                                     <div class="d-flex justify-content-between p-2">
                                         <i class="fa fa-fw fa-shopping-cart display-4"></i>
@@ -62,7 +73,7 @@
                                     </div>
                                     <div class="card-body pt-0"><span class="display-4">2,000</span></div>
                                 </div>
-                            </div>
+                            </div> -->
                         </div>
 
                         <?php include 'dashboard/views/area-bar-chart.php'; ?>

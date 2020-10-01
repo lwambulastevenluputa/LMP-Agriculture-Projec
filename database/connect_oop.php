@@ -1,9 +1,9 @@
 <?php 
 
-     $servername = "localhost";
-     $username = "root";
-     $password = "";
-     $dbname = "testing";
+    $servername = "localhost";
+    $username = "u863218974_root";
+    $password = "Rootadmin247";
+    $dbname = "u863218974_mango";
 
      /********** Object Oriented *************/ 
     $conn = new mysqli("$servername", "$username", "$password", "$dbname");

@@ -18,18 +18,18 @@
                     <div class="sb-nav-link-icon"><i class="fas fa-box-open"></i></div>
                     Add Product
                 </a>
-                <a class="nav-link" href="registered_users.php">
+                <!-- <a class="nav-link" href="registered_users.php">
                     <div class="sb-nav-link-icon"><i class="fas fa-users"></i></div>
                     Registered User
-                </a>
-                <a class="nav-link d-none" href="login.php">
+                </a> -->
+                <!-- <a class="nav-link d-none" href="login.php">
                     <div class="sb-nav-link-icon"><i class="fas fa-sign-in-alt"></i></div>
                     Login
-                </a>
-                <a class="nav-link d-none" href="register.php">
+                </a> -->
+                <!-- <a class="nav-link d-none" href="register.php">
                     <div class="sb-nav-link-icon"><i class="far fa-user"></i></div>
                     Register
-                </a>
+                </a> -->
             </div>
         </div>
         <div class="sb-sidenav-footer">

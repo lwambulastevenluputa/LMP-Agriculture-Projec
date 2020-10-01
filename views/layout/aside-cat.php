@@ -4,13 +4,13 @@
 	$product = new Product();	
 ?>
 <aside class="left-sidebar">
-    <h2>Category</h2>
+    <h2 class="pt-2">Category</h2>
     <div class="panel-group category-products">
 		
         <div style=" overflow-y: auto; overflow-x: hidden;">
             <div class="list-group-item checkbox">
                 <?php $query = "SELECT DISTINCT category_name FROM categories ORDER BY category_name";
-                $statement = $connect->prepare($query);
+                $statement = $conn->prepare($query);
                 $statement->execute();
                 $result = $statement->fetchAll();
                 foreach($result as $row) : ?>
@@ -29,7 +29,7 @@
         <div style=" overflow-y: auto; overflow-x: hidden;">
             <div class="list-group-item checkbox">
                 <?php $query = "SELECT DISTINCT(brand_name) FROM brands";
-                $statement = $connect->prepare($query);
+                $statement = $conn->prepare($query);
                 $statement->execute();
                 $result = $statement->fetchAll();
 				foreach($result as $row): ?>

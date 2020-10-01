@@ -1,10 +1,11 @@
 <?php
 class Product {
     // database credentials
+    
 	private $host  = 'localhost';
     private $user  = 'root';
     private $password   = "";
-    private $database  = "cart_system";
+    private $database  = "u863218974_mango";
     // database connection
     private $dbConnect = false;
     // tables in the cart_system
@@ -121,4 +122,3 @@ class Product {
 		return $searchResultHTML;	
 	}	
 }
-?>

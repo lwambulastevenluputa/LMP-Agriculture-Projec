@@ -1,9 +1,15 @@
-<?php 
+<?php
+/*
+    $servername = "localhost";
+    $username = "root";
+    $password = "";
+    $dbname = "agritech_market";
+*/
 
-     $servername = "localhost";
-     $username = "root";
-     $password = "";
-     $dbname = "agritech_market";
+    $servername = "localhost";
+    $username = "root";
+    $password = "";
+    $dbname = "u863218974_mango";
 
      /********** Object Oriented *************/ 
     $conn = new mysqli("$servername", "$username", "$password", "$dbname");
@@ -24,4 +30,3 @@
     //    echo 'Error message: ' . mysqli_connect_error() . '<br>';
     //    die();
     // }
-?>
