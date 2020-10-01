@@ -768,6 +768,8 @@
 
 
 
+
+
         <div class="container" id="vert-scroll-cont-5">
             <div id="result" style="display: flex;">
                 <?php
@@ -806,7 +808,6 @@
 
             </div><!-- End Row -->
         </div>
-
 
         <div style="padding-top:160px; padding-right: 20px;">
             <i class="fas fa-arrow-circle-right fa-3x" id="horizon-next-5"></i>
