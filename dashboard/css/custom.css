@@ -1,0 +1,76 @@
+.text-mango-orange {
+    color: #FE980F;
+}
+
+.bg-mango-orange {
+    background-color: #FE980F;
+}
+
+.bg-mango-gray {
+    background-color: #f5f5f5;
+}
+
+text-white {
+    color: #fff;
+}
+
+bg-white {
+    background-color: #fff;
+}
+
+text-black {
+    color: #000;
+}
+
+bg-black {
+    background-color: #000;
+}
+
+.navbar-dark .navbar-nav .nav-link {
+    color: black;
+}
+
+.nav-logo {
+    height: 55px;
+    width: 200px;
+    float: left;
+}
+
+.sb-sidenav-dark {
+    color: #394352;
+    background-color: #f8f9fa;
+}
+
+.sb-sidenav-dark .sb-sidenav-footer {
+    color: black;
+    background-color: #fafcfc;
+}
+
+.sb-sidenav-dark .sb-sidenav-menu .sb-sidenav-menu-heading {
+    color: #adb5bd;
+}
+
+.sb-sidenav-dark .sb-sidenav-menu .nav-link .sb-nav-link-icon {
+    color: gray;
+}
+
+.sb-sidenav-dark .sb-sidenav-menu .nav-link {
+    color: gray;
+}
+
+.sb-sidenav-dark .sb-sidenav-menu .nav-link:hover {
+    color: orange;
+}
+
+.sb-sidenav-dark .sb-sidenav-menu .nav-link.active {
+    color: orange;
+}
+
+.sb-sidenav-dark .sb-sidenav-menu .nav-link.active .sb-nav-link-icon {
+    color: orange;
+}
+
+
+.sb-sidenav-dark .sb-sidenav-menu .nav-link .sb-sidenav-collapse-arrow {
+    color: indigo;
+}

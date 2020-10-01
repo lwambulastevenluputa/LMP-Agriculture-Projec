@@ -1,0 +1,103 @@
+.card {
+
+    width: 100%;
+
+    background-color: #fff;
+
+    border-radius: 5px;
+
+    padding-top: 10px;
+
+    text-align: center;
+
+    cursor: pointer;
+
+    font-family: 'Marmelad', sans-serif;;
+
+    /* Add shadows to create the "card" effect */
+
+    box-shadow: 10px 10px 15px grey;
+
+    
+
+    transition: 0.7s; 
+
+}
+
+
+
+@media (max-width: 70em){
+
+    .container .row{
+
+        width: 100%;
+
+    }
+
+}
+
+@media (max-width: 50em){
+
+    .container .row{
+
+        width: 100%;
+
+        /* padding-left: 10%; */
+
+    }
+
+}
+
+
+
+
+
+
+
+.container .card .content {
+
+    padding: 3px 16px;
+
+    text-align: center;
+
+    font-family: 'Marmelad', sans-serif;;
+
+}
+
+
+
+
+
+
+
+
+
+
+
+.wallet .card:hover {
+
+    background-color: orange;
+
+    color: #fff;
+
+    border: none;
+
+    transform: scale(1.1);
+
+    /* hover on */
+
+    transition: 0.8s;
+
+}
+
+
+
+.product .card:hover {
+
+    transform: scale(1.1);
+
+    /* hover on */
+
+    transition: 0.8s;
+
+}

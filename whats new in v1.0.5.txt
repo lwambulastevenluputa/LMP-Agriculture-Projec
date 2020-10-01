@@ -1,0 +1,9 @@
+In this version, 
+	the idea has changed from an ecommerce to a agro market place where farmers (producers) and consumers meet cutting off the middle man.
+
+Improvement of the template:
+	1. the index.php is taking up the full width of the screen
+	2. product_details.php is been updated to display product information, product details, shipping details, reviews and recommended items.
+	3. market_prices.php shows a table with product name, units, price and last updated.
+
+
