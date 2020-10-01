@@ -807,6 +807,44 @@
             </div><!-- End Row -->
         </div>
 
+        <div class="container" id="vert-scroll-cont-5">
+            <div id="result" style="display: flex;">
+                <?php
+                include 'database/db_connection.php';
+                $stmt = $conn->prepare("SELECT * FROM products");
+                $stmt->execute();
+                $result = $stmt->get_result();
+                while ($row = $result->fetch_assoc()) : ?>
+
+                <div id="product" class="product-image-wrapper">
+                    <div class="single-product">
+                        <div class="productinfo text-center">
+                            <a href="product_details.php?id=<?php echo $row['id'] ?>"><img
+                                    src="<?= $row['product_image'] ?>" alt="" class="card-img-top" height="250"></a>
+                            <h2>ZMW <?= number_format($row['product_price'], 2) ?></h2>
+                            <p class="mb-1"><?= $row['product_name'] ?></p>
+                            <p class="text-success mb-1"><?= $row['product_seller'] ?></p>
+                        </div>
+                        <div class="p-2">
+                            <form action="" class="form-submit">
+                                <input type="hidden" class="pid" value="<?= $row['id'] ?>">
+                                <input type="hidden" class="pname" value="<?= $row['product_name'] ?>">
+                                <input type="hidden" class="pprice" value="<?= $row['product_price'] ?>">
+                                <input type="hidden" class="pimage" value="<?= $row['product_image'] ?>">
+                                <input type="hidden" class="pcode" value="<?= $row['product_code'] ?>">
+                                <input type="hidden" class="currency" value="<?= $row['currency'] ?>">
+                                <!-- <a href="" class="btn btn-default add-to-cart addItemBtn text-center"><i class="fas fa-cart-plus"></i>Add to cart</a> -->
+                                <button class="btn btn-block add-to-cart addItemBtn"><i
+                                        class="fas fa-cart-plus"></i>&nbsp;&nbsp;Add to cart</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <?php endwhile; ?>
+
+            </div><!-- End Row -->
+        </div>
 
         <div style="padding-top:160px; padding-right: 20px;">
             <i class="fas fa-arrow-circle-right fa-3x" id="horizon-next-5"></i>
