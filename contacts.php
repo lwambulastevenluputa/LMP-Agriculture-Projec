@@ -28,7 +28,7 @@ $a=mysqli_escape_string($connect,$_POST['addcontact_number']);
 	$time=date('h:i:s a');
 	
 	
-	$query2="SELECT * FROM mango_contacts WHERE (username='".number."' AND contact='".$a."') OR (contact='".number."' AND username='".$a."') AND LIMIT 1";
+	$query2="SELECT * FROM mango_contacts WHERE (username='".number."' AND contact='".$a."') OR (contact='".number."' AND username='".$a."') AND approval='yes' LIMIT 1";
 
     //Execute the query
     $result2=mysqli_query($connect, $query2);
@@ -63,6 +63,8 @@ header('location: index.php?existerror');
 
 <?php
 
+
+
 if(isset($_GET['c'])){
 $a=mysqli_escape_string($connect,$_GET['c']);
 
@@ -75,7 +77,7 @@ $a=mysqli_escape_string($connect,$_GET['c']);
 	$time=date('h:i:s a');
 	
 	
-	$query4="SELECT * FROM mango_user_credentials WHERE ref='$a' LIMIT 1";
+	$query4="SELECT * FROM mango_user_credentials WHERE mobile_number='$a' LIMIT 1";
     //Execute the query
     $result4=mysqli_query($connect, $query4);
 	
@@ -84,7 +86,7 @@ $a=mysqli_escape_string($connect,$_GET['c']);
 $row4=mysqli_fetch_array($result4);
 $a=$row4['mobile_number'];
 
-	$query2="SELECT * FROM mango_chats WHERE username='".number."' AND contact='".$a."' AND visible!=no LIMIT 1";
+	$query2="SELECT * FROM mango_chats WHERE (username='".number."' AND contact='".$a."') AND visible!='no' LIMIT 1";
 
     //Execute the query
     $result2=mysqli_query($connect, $query2);
@@ -97,22 +99,31 @@ $a=$row4['mobile_number'];
 
     // notify user
     if (mysqli_affected_rows($connect) > 0) {
-	header('location: index.php?csucc');
+	echo $ref;
 $startchat=$a;
 
     } else {
-    header('location: index.php?error');
+    echo $ref;
     }
 
 }else{
 
+	$query2="SELECT * FROM mango_chats WHERE username='".number."' AND contact='".$a."' AND visible!='no' LIMIT 1";
+
+    //Execute the query
+    $res=mysqli_query($connect, $query2);
+    
+    if($row=mysqli_fetch_array($res)){
+	echo $row['ref'];
+    }
 $startchat=$a;
-header('location: index.php?error');
 
 }
 
 }
 }
+
+
 
 
 ?>
@@ -120,6 +131,8 @@ header('location: index.php?error');
 
 
 <?php
+
+
 
 if(isset($_POST['c'])){
 $a=mysqli_escape_string($connect,$_POST['c']);
@@ -133,7 +146,7 @@ $a=mysqli_escape_string($connect,$_POST['c']);
 	$time=date('h:i:s a');
 	
 	
-	$query4="SELECT * FROM mango_user_credentials WHERE ref='$a' LIMIT 1";
+	$query4="SELECT * FROM mango_user_credentials WHERE mobile_number='$a' LIMIT 1";
     //Execute the query
     $result4=mysqli_query($connect, $query4);
 	
@@ -142,7 +155,7 @@ $a=mysqli_escape_string($connect,$_POST['c']);
 $row4=mysqli_fetch_array($result4);
 $a=$row4['mobile_number'];
 
-	$query2="SELECT * FROM mango_chats WHERE username='".number."' AND contact='".$a."' AND visible!=no LIMIT 1";
+	$query2="SELECT * FROM mango_chats WHERE (username='".number."' AND contact='".$a."') AND visible!='no' LIMIT 1";
 
     //Execute the query
     $result2=mysqli_query($connect, $query2);
@@ -155,22 +168,32 @@ $a=$row4['mobile_number'];
 
     // notify user
     if (mysqli_affected_rows($connect) > 0) {
-	header('location: index.php?csucc');
+	echo $ref;
 $startchat=$a;
 
     } else {
-    header('location: index.php?error');
+    echo $ref;
     }
 
 }else{
 
+	$query2="SELECT * FROM mango_chats WHERE username='".number."' AND contact='".$a."' AND visible!='no' LIMIT 1";
+
+    //Execute the query
+    $res=mysqli_query($connect, $query2);
+    
+    if($row=mysqli_fetch_array($res)){
+	echo $row['ref'];
+    }
 $startchat=$a;
-header('location: index.php?error');
 
 }
 
 }
 }
+
+
+
 
 
 header('location: index.php?error');

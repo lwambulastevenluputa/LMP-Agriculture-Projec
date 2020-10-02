@@ -1,268 +1,223 @@
 <?php
 
-//check connection to db that it is not the first time.
+    //check connection to db that it is not the first time.
+    
+if(isset($_SESSION['mobilenumber'])){   
+$_SESSION['user_name']=$_SESSION['mobilenumber'];
+$accountuser=$_SESSION['mobilenumber'];
+    define("chat_number", $_SESSION['user_name']);
 
-if (isset($_SESSION['mobilenumber'])) {
-	$_SESSION['user_name'] = $_SESSION['mobilenumber'];
-	define("chat_number", $_SESSION['user_name']);
-
-	define("number", $_SESSION['user_name']);
+    define("number", $_SESSION['user_name']);
 }
-include('config/db_connection.php');
+    include('../config/db_connect.php');
 ?>
-<script type="text/javascript">
-//load first time
-
-function loadsearch(a) {
-    document.getElementById('apptopslide').style.display = 'none';
-    var b = document.getElementById('inputsearchterm').value;
-
-    $.ajax({
-
-        type: 'POST',
-
-        url: 'productdata.php',
-
-        dataType: 'html',
-
-        data: {
-            user: a,
-            searchterm: b
-        },
-
-        cache: false,
-
-        success: function(response) {
-            document.getElementById('result').innerHTML = response;
-
-        }
-    });
-
-}
-</script>
 
 
 <style>
-.talkbubble2 {
-    width: 60%;
-    color: #000;
-    min-height: 30px;
-    background-color: #fff;
-    position: relative;
-    float: left;
-    font-size: 12px;
-    margin-bottom: 5px;
-    padding: 5px 8px 5px 8px;
-    border-radius: 0px 20px 20px 20px;
+.talkbubble2{
+width:60%;
+color:#000;
+min-height:30px;
+background-color:#fff;
+position:relative;
+float:left;
+font-size:12px;
+margin-bottom:5px;
+padding:5px 8px 5px 8px;
+border-radius:0px 20px 20px 20px;
 }
-
-.talkbubble2:before {
-    content: "";
-    position: absolute;
-    right: 100%;
-    top: 0px;
-    width: 0;
-    height: 0;
-    border-top: 0px solid transparent;
-    border-right: 5px solid #fff;
-    border-bottom: 8px solid transparent;
+.talkbubble2:before{
+content:"";
+position:absolute;
+right:100%;
+top:0px;
+width:0;
+height:0;
+border-top:0px solid transparent;
+border-right:5px solid #fff;
+border-bottom:8px solid transparent;
 }
 </style>
 
 
 
 <style>
-.talkbubble4 {
-    width: 60%;
-    color: #000;
-    min-height: 30px;
-    background-color: #f60;
-    position: relative;
-    float: right;
-    font-size: 12px;
-    margin-bottom: 5px;
-    padding: 5px 8px 5px 8px;
-    border-radius: 20px 0px 20px 20px;
+.talkbubble4{
+width:60%;
+color:#000;
+min-height:30px;
+background-color:#f60;
+position:relative;
+float:right;
+font-size:12px;
+margin-bottom:5px;
+padding:5px 8px 5px 8px;
+border-radius:20px 0px 20px 20px;
 }
-
-.talkbubble4:before {
-    content: "";
-    position: absolute;
-    left: 100%;
-    top: 0px;
-    width: 0;
-    height: 0;
-    border-top: 0px solid transparent;
-    border-left: 5px solid #f60;
-    border-bottom: 8px solid transparent;
+.talkbubble4:before{
+content:"";
+position:absolute;
+left:100%;
+top:0px;
+width:0;
+height:0;
+border-top:0px solid transparent;
+border-left:5px solid #f60;
+border-bottom:8px solid transparent;
 }
 </style>
 
 
 <style>
-.navscroll::-webkit-scrollbar {
-    width: 6px;
-    background-color: none;
-}
-
-.navscroll::-webkit-scrollbar-thumb {
-    width: 6px;
-    background-color: #888;
-    border-radius: 10px;
-    height: 4px;
-}
-
-.navscroll::-webkit-scrollbar-track {
-    -webkit-box-shadow: insert 0 0 6px rgba(0, 0, 0, 0.7);
-    background: none;
-    margin-top: 4px;
-}
-</style>
-
-
-
-
-
-
-
-<?php
-function profimg($a)
-{
-
-	include('../config/db_connect.php');
-	$query5 = "SELECT * FROM mango_user_credentials WHERE mobile_number='$a' ORDER BY id DESC LIMIT 1";
-	//Execute the query
-	$result5 = mysqli_query($connect, $query5);
-	if (mysqli_num_rows($result5) > 0) {
-		if ($row5 = mysqli_fetch_array($result5)) {
-			if ($row5['photo'] !== '' && $row5['photo'] !== ' ') {
-				$photo = 'uploads/' . $row5['photo'];
-			} else {
-				$photo = 'img/profile.png';
-			}
-		} else {
-			$photo = 'img/profile.png';
-		}
-	} else {
-		$photo = 'img/profile.png';
+	.navscroll::-webkit-scrollbar{
+	width:6px;
+	background-color:none;
 	}
+	.navscroll::-webkit-scrollbar-thumb{
+	width:6px;
+	background-color:#888;
+	border-radius:10px;
+	height:4px; 
+	}
+	.navscroll::-webkit-scrollbar-track{
+	-webkit-box-shadow: insert 0 0 6px rgba(0,0,0,0.7);
+	background:none;
+	margin-top:4px;
+	}
+	</style>
+    
+    
 
-	echo $photo;
-}
-?>
+
+
+
+		
+				<?php
+		function profimg($a){
+
+include('../config/db_connect.php');
+	$query5="SELECT * FROM mango_user_credentials WHERE mobile_number='$a' ORDER BY id DESC LIMIT 1";
+    //Execute the query
+    $result5=mysqli_query($connect, $query5);
+		if(mysqli_num_rows($result5)>0){
+		if($row5=mysqli_fetch_array($result5)){
+		if($row5['photo']!=='' && $row5['photo']!==' '){
+		$photo='uploads/'.$row5['photo'];
+		 }else{
+		$photo='img/profile.png'; 
+		 }
+		 }else{
+		$photo='img/profile.png';
+		 }
+		 }else{
+		$photo='img/profile.png';
+		 }
+		 
+		 echo $photo;
+		 }
+		 ?>
 
 
 
 
 <!-- drawer -->
 
-<div id="drawerbg"
-    onclick="document.getElementById('mangostore_conv').style.display='none';document.getElementById('drawer1').style.display='none';document.getElementById('drawer2').style.display='none';document.getElementById('drawer3').style.display='none';document.getElementById('drawerbg').style.display='none';"
-    style="position:fixed; width:100%; z-index:9999; height:100%; background:rgba(0,0,0,0.7); left:0px; top:0px; z-index:9999; color:#f60; font-size:18px; display:none; padding-top:350px"
-    align="center">
-    <span style="margin-left:100px">Press <b style="color:#fff">ESC</b> key or tap here to dismiss</span>
+<div id="drawerbg" onclick="document.getElementById('mangostore_conv').style.display='none';document.getElementById('drawer1').style.display='none';document.getElementById('drawer2').style.display='none';document.getElementById('drawer3').style.display='none';document.getElementById('drawerbg').style.display='none';" style="position:fixed; width:100%; z-index:9999; height:100%; background:rgba(0,0,0,0.7); left:0px; top:0px; z-index:9999; color:#f60; font-size:18px; display:none; padding-top:350px" align="center">
+<span style="margin-left:100px">Press <b style="color:#fff">ESC</b> key or tap here to dismiss</span>
 </div>
 
 
 
 
 
-<div id="mangostore_conv"
-    style="position:fixed; display:none; top:0px; left:0px; width:40%; height:100vh; z-index:999999; box-shadow:2px 2px 10px #555; background:#fff; font-size:14px; color:#000">
+<div id="mangostore_conv" style="position:fixed; display:none; top:0px; left:0px; width:40%; height:100vh; z-index:999999; box-shadow:2px 2px 10px #555; background:#fff; font-size:14px; color:#000">
 
-    <div id="chat_conv_space" style="width:100%">
+<div id="chat_conv_space" style="width:100%">
+	
+	
+<table style="height:7vh; width:100%; border:none; <?php
+if($theme=='dark'){echo 'background:#222; color:#fff';}else{echo 'background:#fff; color:#000';}
+?>; padding-top:7px">
+<tr style="vertical-align:middle">
+<td align="center" style="width:10%;<?php
+if($theme=='dark'){echo 'background:#222; color:#fff';}else{echo 'background:#fff; color:#000';}
+?> ">
+    
+    
+										<i onclick="document.getElementById('mangostore_conv').style.display='none';document.getElementById('drawer1').style.display='';" class="far fa-arrow-left fa-lg" style=" cursor: pointer;" 
 
-
-        <table style="height:7vh; width:100%; border:none; <?php
-															if ($theme == 'dark') {
-																echo 'background:#222; color:#fff';
-															} else {
-																echo 'background:#fff; color:#000';
-															}
-															?>; padding-top:7px">
-            <tr style="vertical-align:middle">
-                <td align="center" style="width:10%;<?php
-													if ($theme == 'dark') {
-														echo 'background:#222; color:#fff';
-													} else {
-														echo 'background:#fff; color:#000';
-													}
-													?> ">
-
-
-                    <i onclick="document.getElementById('mangostore_conv').style.display='none';document.getElementById('drawer1').style.display='';"
-                        class="far fa-arrow-left fa-lg" style=" cursor: pointer;"></i>
-                </td>
-                <td style="width:10%">
-                </td>
-                <td align="left" style="width:50%; padding-left:5px; <?php
-																		if ($theme == 'dark') {
-																			echo 'background:#222; color:#fff';
-																		} else {
-																			echo 'background:#fff; color:#000';
-																		}
-																		?> ">
-                    <a href="#profilepage">
-                        <span style="font-size:15px; font-weight:600; <?php if ($theme == 'dark') {
-																			echo 'color:#fff';
-																		} else {
-																			echo 'color:#000';
-																		}
-																		?>" id="conversation_name">Choose a chat</span>
-                    </a>
-                </td>
-                <td style="width:30%" align="right">
+										></i>
+</td>
+<td style="width:10%">
+</td>
+<td align="left" style="width:50%; padding-left:5px; <?php
+if($theme=='dark'){echo 'background:#222; color:#fff';}else{echo 'background:#fff; color:#000';}
+?> ">
+    <a href="#profilepage">
+        <span style="font-size:15px; font-weight:600; <?php if($theme=='dark'){echo 'color:#fff';}else{echo 'color:#000';}
+?>" id="conversation_name">Choose a chat</span>
+</a>
+</td>
+<td style="width:30%" align="right">
 
 
-                    <div style="
+								<div style="
 
 								display: flex;  float:right;
 
 								right:0;<?php
-										if ($theme == 'dark') {
-											echo 'background:#222; color:#fff';
-										} else {
-											echo 'background:#fff; color:#000';
-										}
-										?>  " align="right">
+if($theme=='dark'){echo 'background:#222; color:#fff';}else{echo 'background:#fff; color:#000';}
+?>  " 
+
+								align="right">
+
+                                
+                                
+										<i 
+
+					onClick="document.getElementById('mango_webcam').setAttribute('class','divbottomdockhandup');document.getElementById('mango_webcam').style.display=''" class="far fa-video fa-lg" 
+
+										style=" cursor: pointer; margin-right:20px" 
+
+										></i>
+										
+										
+										<i class="far fa-phone fa-lg" 
+
+										style=" cursor: pointer; margin-right:20px" 
+
+										></i>
+										
+										
+
+                                <span onclick="menu_options()" style="margin-right:20px; margin-top:-2px">
+
+                                <i  class="fas fa-ellipsis-v fa-lg" style="cursor: pointer;" id="menu-options"></i>
+
+                                </span>
+		
+
+				
+								
+
+<script type="text/javascript">
+var a = 0;
+function menu_options(){
+if(a==0){
+document.getElementById('mango_options').style.display='';
+a=1;    
+}else{
+document.getElementById('mango_options').style.display='none';
+a=0;    
+}
+}
+</script>
 
 
 
-                        <i onClick="document.getElementById('mango_webcam').setAttribute('class','divbottomdockhandup');document.getElementById('mango_webcam').style.display=''"
-                            class="far fa-video fa-lg" style=" cursor: pointer; margin-right:20px"></i>
+				<div align="left" id="mango_options"
 
-
-                        <i class="far fa-phone fa-lg" style=" cursor: pointer; margin-right:20px"></i>
-
-
-
-                        <span onclick="menu_options()" style="margin-right:20px; margin-top:-2px">
-
-                            <i class="fas fa-ellipsis-v fa-lg" style="cursor: pointer;" id="menu-options"></i>
-
-                        </span>
-
-
-
-
-
-                        <script type="text/javascript">
-                        var a = 0;
-
-                        function menu_options() {
-                            if (a == 0) {
-                                document.getElementById('mango_options').style.display = '';
-                                a = 1;
-                            } else {
-                                document.getElementById('mango_options').style.display = 'none';
-                                a = 0;
-                            }
-                        }
-                        </script>
-
-
-
-                        <div align="left" id="mango_options" style="display:none; 
+									style="display:none; 
 
 									margin-top: 55px;
 
@@ -299,440 +254,443 @@ function profimg($a)
 									">
 
 
-                            <div onClick="extendminimizechat()" id="extendchat" class="mangooptions">
+										<div onClick="extendminimizechat()" id="extendchat" class="mangooptions">
 
-                                Extend Chat
+										Extend Chat
 
-                            </div>
+										</div>
+<!--
+										<div class="mangooptions">
 
-                            <div class="mangooptions">
+										View Profile
 
-                                View Profile
+										</div>
 
-                            </div>
+										<div class="mangooptions">
 
-                            <div class="mangooptions">
+										Mute Notifications
 
-                                Mute Notifications
+										</div>
 
-                            </div>
+										<div class="mangooptions">
 
-                            <div class="mangooptions">
+										Clear Chat
 
-                                Clear Chat
+										</div>
 
-                            </div>
+										<div class="mangooptions">
 
-                            <div class="mangooptions">
+										Delete Chat
 
-                                Delete Chat
+										</div>
+-->
+									</div>
 
-                            </div>
+							
+<script type="text/javascript">
+var b=0;
+    function extendminimizechat(){
+    if(b==0){
+    document.getElementById('extendchat').innerHTML='Minimize Chat';
+    document.getElementById('mangostore_conv').style.width='100%';
+document.getElementById('mango_options').style.right='2%';
+    b=1;
+    menu_options();
+}else{
+    b=0;
+    document.getElementById('extendchat').innerHTML='Extend Chat';
+    document.getElementById('mangostore_conv').style.width='40%';
+document.getElementById('mango_options').style.right='';
+    menu_options();
+}
+}
+</script>
 
-                        </div>
+</div>
+						
 
 
-                        <script type="text/javascript">
-                        var b = 0;
+								
 
-                        function extendminimizechat() {
-                            if (b == 0) {
-                                document.getElementById('extendchat').innerHTML = 'Minimize Chat';
-                                document.getElementById('mangostore_conv').style.width = '100%';
-                                document.getElementById('mango_options').style.right = '2%';
-                                b = 1;
-                                menu_options();
-                            } else {
-                                b = 0;
-                                document.getElementById('extendchat').innerHTML = 'Extend Chat';
-                                document.getElementById('mangostore_conv').style.width = '40%';
-                                document.getElementById('mango_options').style.right = '';
-                                menu_options();
-                            }
-                        }
-                        </script>
+								
 
-                    </div>
+<style>
 
+.mangooptions{
 
+	padding-top:5px; 
 
+	padding-bottom:5px;
 
+	padding-left: 10px;
 
+	color:#000; 
 
+	width:100%; 
 
-                    <style>
-                    .mangooptions {
+	font-size: 17px; 
 
-                        padding-top: 5px;
+	cursor: pointer;
 
-                        padding-bottom: 5px;
+}
 
-                        padding-left: 10px;
+.mangooptions:hover{
 
-                        color: #000;
+	background-color: #F0F0F0;
 
-                        width: 100%;
+}
 
-                        font-size: 17px;
+</style>
 
-                        cursor: pointer;
+								
 
-                    }
 
-                    .mangooptions:hover {
 
-                        background-color: #F0F0F0;
 
-                    }
-                    </style>
+</td>
+</tr>
+</table>
 
+<div align="center" style="height:10vh; width:100%; overflow-x:hidden; white-space:nowrap; border:none; <?php
+if($theme=='dark'){echo 'background:#222; color:#fff';}else{echo 'background:#fff; color:#000';}
+?>; padding-top:7px">
 
 
 
+</div>
 
 
-                </td>
-            </tr>
-        </table>
 
-        <div align="center" style="height:10vh; width:100%; overflow-x:hidden; white-space:nowrap; border:none; <?php
-																												if ($theme == 'dark') {
-																													echo 'background:#222; color:#fff';
-																												} else {
-																													echo 'background:#fff; color:#000';
-																												}
-																												?>; padding-top:7px">
 
+<input id="myInput" onKeyUp="myFunction()" align="center" style="height:5vh; color:#f60; outline:none; padding-top:5px; font-size:15px; width:100%; text-decoration:none; border:none;<?php
+if($theme=='dark'){echo 'background:#222';}else{echo 'background:#fff';}
+?>; padding-top:7px" placeholder="Type to filter"/>
 
 
-        </div>
 
 
 
 
-        <input id="myInput" onKeyUp="myFunction()" align="center" style="height:5vh; color:#f60; outline:none; padding-top:5px; font-size:15px; width:100%; text-decoration:none; border:none;<?php
-																																																if ($theme == 'dark') {
-																																																	echo 'background:#222';
-																																																} else {
-																																																	echo 'background:#fff';
-																																																}
-																																																?>; padding-top:7px" placeholder="Type to filter" />
+				<?php
 
+	$query5="SELECT * FROM mango_user_credentials WHERE mobile_number='".chat_number."' ORDER BY id DESC LIMIT 1";
 
+    //Execute the query
 
+    $result5=mysqli_query($connect, $query5);
 
+		if(mysqli_num_rows($result5)>0){
 
+		if($row5=mysqli_fetch_array($result5)){
 
-        <?php
+		if($row5['bg']!=='' && $row5['bg']!==' '){
 
-		$query5 = "SELECT * FROM mango_user_credentials WHERE mobile_number='" . chat_number . "' ORDER BY id DESC LIMIT 1";
+		$bg='uploads/'.$row5['bg'];
 
-		//Execute the query
+		 }else{
 
-		$result5 = mysqli_query($conn, $query5);
+		$bg='img/backimage.png'; 
 
-		if (mysqli_num_rows($result5) > 0) {
+		 }
 
-			if ($row5 = mysqli_fetch_array($result5)) {
+		 }else{
 
-				if ($row5['bg'] !== '' && $row5['bg'] !== ' ') {
+		$bg='img/backimage.png'; 
 
-					$bg = 'uploads/' . $row5['bg'];
-				} else {
+		 }
 
-					$bg = 'img/backimage.png';
-				}
-			} else {
+		 }else{
 
-				$bg = 'img/backimage.png';
-			}
-		} else {
+		$bg='img/backimage.png'; 
 
-			$bg = 'img/backimage.png';
-		}
+		 }
 
-		?>
+		 ?>
 
-        <div id="conversations" class="navscroll"
-            style="overflow-y: scroll; background:#ddd; background-image:url(<?php echo $bg; ?>); background-repeat:no-repeat; padding:20px; background-position:center; background-size:100% 100%; width:100%; height:60vh; max-height:60vh">
+                <div id="conversations" class="navscroll" style="overflow-y: scroll; background:#ddd; background-image:url(<?php echo $bg; ?>); background-repeat:no-repeat; padding:20px; background-position:center; background-size:100% 100%; width:100%; height:60vh; max-height:60vh">
 
 
-        </div>
+</div>
 
 
 
 
 
-        <script>
-        function myFunction() {
+<script>
 
-            var input, filter, ul, li, a, i;
+function myFunction() {
 
-            input = document.getElementById("myInput");
+    var input, filter, ul, li, a, i;
 
-            filter = input.value.toUpperCase();
+    input = document.getElementById("myInput");
 
-            ul = document.getElementById("myUL");
+    filter = input.value.toUpperCase();
 
-            li = ul.getElementsByTagName("li");
+    ul = document.getElementById("myUL");
 
-            for (i = 0; i < li.length; i++) {
-                a = li[i].getElementsByTagName("a")[i];
+    li = ul.getElementsByTagName("li");
 
-                if (li[i].innerHTML.toUpperCase().indexOf(filter) > -1) {
+    for (i = 0; i < li.length; i++) {
+        a = li[i].getElementsByTagName("a")[i];
 
-                    li[i].style.display = "";
+        if (li[i].innerHTML.toUpperCase().indexOf(filter) > -1) {
 
-                } else {
+            li[i].style.display = "";
 
-                    li[i].style.display = "none";
+        } else {
 
+            li[i].style.display = "none";
 
 
-                }
-
-            }
-
-        }
-        </script>
-
-        <style>
-        .searchname::-webkit-input-placeholder {
-
-            color: #000;
-
-            font-style: normal;
-
-        }
-        </style>
-
-
-
-
-
-        <style>
-        * {
-
-            box-sizing: border-box;
 
         }
 
+    }
+
+}
+
+</script>
+
+<style>
 
 
-        #myInput {
 
-            background-color: none;
+.searchname::-webkit-input-placeholder{
 
-            font-size: 13px;
+color:#000;
 
-            height: 35px;
+font-style:normal;
 
-            width: 40%;
+}
 
-            color: #000;
+</style>
 
-            border-radius: 0px;
 
-            margin-top: -5px;
 
-            margin-bottom: 0px;
 
-            padding: 0px 0px 0px 5px;
 
-            border: none;
+<style>
 
+* {
+
+  box-sizing: border-box;
+
+}
+
+
+
+#myInput {
+
+background-color:none;
+
+  font-size: 13px;
+
+  height:35px;
+
+  width:40%;
+
+  color:#000;
+
+  border-radius:0px;
+
+   margin-top:-5px;
+
+  margin-bottom:0px;
+
+  padding: 0px 0px 0px 5px;
+
+  border:none;
+
+}
+
+
+
+#myUL {
+
+  list-style-type: none;
+
+  padding: 0;
+
+  margin: 0;
+
+}
+
+
+
+#myUL li a {
+
+  text-decoration: none;
+
+}
+
+
+
+#myUL li a.header {
+
+   background:#ddd;
+
+  cursor: default;
+
+  color:#fff;
+
+}
+
+
+
+</style>
+
+
+
+
+
+
+
+
+<div align="center" style="height:5vh; width:100%; border:none; <?php
+if($theme=='dark'){echo 'background:#222; color:#fff';}else{echo 'background:#fff; color:#000';}
+?>; padding-top:7px">
+
+
+<span onclick="insert_suggested_emoji('laugh')" id="laugh" class="myUL2"><img src="emoticons/long_laugh.png" style="height:30px; width:30px; display:inline-block; margin-right:5px" /></span>
+<span onclick="insert_suggested_emoji('angry')" class="myUL2" id="angry"><img src="emoticons/angry.png" style="height:30px; width:30px; display:inline-block; margin-right:5px"/></span>
+<span onclick="insert_suggested_emoji('smile')" class="myUL2" id="smile"><img src="emoticons/smile.png" style="height:30px; width:30px; display:inline-block; margin-right:5px"/></span>
+
+
+
+
+
+
+<script type="text/javascript">
+
+var filter='';
+var char;
+
+function myFunctionsuggestionreset(){
+    li = document.getElementsByClassName("myUL2");
+    for (i = 0; i < li.length; i++) {
+            li[i].style.display = "";
+    }
+}
+
+function myFunctionsuggestiontype() {
+char=window.event.keyCode;
+if(char!==32){
+filter=filter+String.fromCharCode(char);
+myFunctionsuggestion(filter);
+}else{
+filter='';
+myFunctionsuggestionreset();
+}
+}
+
+
+
+function myFunctionsuggestion(c) {
+filters=c;
+    var filters, li, i;
+
+    li = document.getElementsByClassName("myUL2");
+    for (i = 0; i < li.length; i++) {
+
+        if (li[i].id.toUpperCase().indexOf(filters) > -1) {
+            li[i].style.display = "";
+        } else {
+            li[i].style.display = "none";
         }
 
+    }
 
+}
 
-        #myUL {
+function insert_suggested_emoji(sel){
+if(filter!==''){
+var z = document.getElementById('convusermsg_div').innerHTML;
+var x = document.getElementById('convusermsg_div').innerHTML.length;
+var y = filter.length;
+z=z.slice(0,x-y);
+document.getElementById('convusermsg_div').innerHTML=z;
+enteremoji(sel);
+filter='';
+}else{
+enteremoji(sel);
+}
+}
+</script>
 
-            list-style-type: none;
 
-            padding: 0;
 
-            margin: 0;
+</div>
+<div align="center" style="height:15%; width:100%; border:none; <?php
+if($theme=='dark'){echo 'background:#222; color:#fff';}else{echo 'background:#fff; color:#000';}
+?> ">
 
-        }
 
+<script type="text/javascript">
 
+function enteremoji(a){
 
-        #myUL li a {
+var b = document.getElementById('convusermsg_div');
 
-            text-decoration: none;
+if(a=='long_laugh'){
 
-        }
+b.innerHTML=b.innerHTML+"<img src='emoticons/long_laugh.png' style='width:14px; height:14px'/>";
 
+}
+if(a=='laugh'){
 
+b.innerHTML=b.innerHTML+"<img src='emoticons/laugh.png' style='width:14px; height:14px'/>";
 
-        #myUL li a.header {
+}
 
-            background: #ddd;
+if(a=='smile'){
 
-            cursor: default;
+b.innerHTML=b.innerHTML+"<img src='emoticons/smile.png' style='width:14px; height:14px'/>";
 
-            color: #fff;
+}
 
-        }
-        </style>
+if(a=='angry'){
 
+b.innerHTML=b.innerHTML+"<img src='emoticons/angry.png' style='width:14px; height:14px'/>";
 
+}
 
 
 
+document.getElementById('convusermsg').value=document.getElementById('convusermsg_div').innerHTML;
 
 
 
-        <div align="center" style="height:5vh; width:100%; border:none; <?php
-																		if ($theme == 'dark') {
-																			echo 'background:#222; color:#fff';
-																		} else {
-																			echo 'background:#fff; color:#000';
-																		}
-																		?>; padding-top:7px">
+}
 
+</script>
 
-            <span onclick="insert_suggested_emoji('laugh')" id="laugh" class="myUL2"><img src="emoticons/long_laugh.png"
-                    style="height:30px; width:30px; display:inline-block; margin-right:5px" /></span>
-            <span onclick="insert_suggested_emoji('angry')" class="myUL2" id="angry"><img src="emoticons/angry.png"
-                    style="height:30px; width:30px; display:inline-block; margin-right:5px" /></span>
-            <span onclick="insert_suggested_emoji('smile')" class="myUL2" id="smile"><img src="emoticons/smile.png"
-                    style="height:30px; width:30px; display:inline-block; margin-right:5px" /></span>
 
 
 
 
+				
 
 
-            <script type="text/javascript">
-            var filter = '';
-            var char;
 
-            function myFunctionsuggestionreset() {
-                li = document.getElementsByClassName("myUL2");
-                for (i = 0; i < li.length; i++) {
-                    li[i].style.display = "";
-                }
-            }
+					 <table id="clockwork_chatbox" style="width:100%; height:50px">
 
-            function myFunctionsuggestiontype() {
-                char = window.event.keyCode;
-                if (char !== 32) {
-                    filter = filter + String.fromCharCode(char);
-                    myFunctionsuggestion(filter);
-                } else {
-                    filter = '';
-                    myFunctionsuggestionreset();
-                }
-            }
+					 <tr style="vertical-align:middle" align="center">
 
+					 <td style="width:15%">
 
+					 <span onClick="document.getElementById('mango_smileys').style.display=''"><img src="emoticons/long_laugh.png" style="height:20px; width:20px"></span>
 
-            function myFunctionsuggestion(c) {
-                filters = c;
-                var filters, li, i;
+					 
 
-                li = document.getElementsByClassName("myUL2");
-                for (i = 0; i < li.length; i++) {
+					 
 
-                    if (li[i].id.toUpperCase().indexOf(filters) > -1) {
-                        li[i].style.display = "";
-                    } else {
-                        li[i].style.display = "none";
-                    }
+					 
 
-                }
+				<div id="mango_smileys" 
 
-            }
+				align="center" 
 
-            function insert_suggested_emoji(sel) {
-                if (filter !== '') {
-                    var z = document.getElementById('convusermsg_div').innerHTML;
-                    var x = document.getElementById('convusermsg_div').innerHTML.length;
-                    var y = filter.length;
-                    z = z.slice(0, x - y);
-                    document.getElementById('convusermsg_div').innerHTML = z;
-                    enteremoji(sel);
-                    filter = '';
-                } else {
-                    enteremoji(sel);
-                }
-            }
-            </script>
-
-
-
-        </div>
-        <div align="center" style="height:15%; width:100%; border:none; <?php
-																		if ($theme == 'dark') {
-																			echo 'background:#222; color:#fff';
-																		} else {
-																			echo 'background:#fff; color:#000';
-																		}
-																		?> ">
-
-
-            <script type="text/javascript">
-            function enteremoji(a) {
-
-                var b = document.getElementById('convusermsg_div');
-
-                if (a == 'long_laugh') {
-
-                    b.innerHTML = b.innerHTML + "<img src='emoticons/long_laugh.png' style='width:14px; height:14px'/>";
-
-                }
-                if (a == 'laugh') {
-
-                    b.innerHTML = b.innerHTML + "<img src='emoticons/laugh.png' style='width:14px; height:14px'/>";
-
-                }
-
-                if (a == 'smile') {
-
-                    b.innerHTML = b.innerHTML + "<img src='emoticons/smile.png' style='width:14px; height:14px'/>";
-
-                }
-
-                if (a == 'angry') {
-
-                    b.innerHTML = b.innerHTML + "<img src='emoticons/angry.png' style='width:14px; height:14px'/>";
-
-                }
-
-
-
-                document.getElementById('convusermsg').value = document.getElementById('convusermsg_div').innerHTML;
-
-
-
-            }
-            </script>
-
-
-
-
-
-
-
-
-
-            <table id="clockwork_chatbox" style="width:100%; height:50px">
-
-                <tr style="vertical-align:middle" align="center">
-
-                    <td style="width:15%">
-
-                        <span onClick="document.getElementById('mango_smileys').style.display=''"><img
-                                src="emoticons/long_laugh.png" style="height:20px; width:20px"></span>
-
-
-
-
-
-
-
-                        <div id="mango_smileys" align="center" style="
+				style="
 
 				overflow-y:auto; 
 
@@ -745,12 +703,8 @@ function profimg($a)
 				height:100px; 
 
 				<?php
-				if ($theme == 'dark') {
-					echo 'background:#222; color:#fff';
-				} else {
-					echo 'background:#fff; color:#000';
-				}
-				?>;
+if($theme=='dark'){echo 'background:#222; color:#fff';}else{echo 'background:#fff; color:#000';}
+?>;
 
 				transition:all .3s; 
 
@@ -762,10 +716,13 @@ function profimg($a)
 
 				padding:5px">
 
+		
 
+				<div align="right" 
 
-                            <div align="right" onClick="document.getElementById('mango_smileys').style.display='none'"
-                                style="width:100%; 
+				onClick="document.getElementById('mango_smileys').style.display='none'" 
+
+				style="width:100%; 
 
 				font-size:20px; 
 
@@ -775,161 +732,174 @@ function profimg($a)
 
 				color:#000; ">
 
-                                &times; &nbsp;&nbsp;
+				&times; &nbsp;&nbsp;
 
-                            </div>
+				</div>
 
+				
 
+				
 
+				
 
+				
 
+				
 
+				<table style="width:100%">
 
+				<tr style="height:30px; vertical-align:middle" align="center">
 
+				<td style="width:20%" onClick="enteremoji('long_laugh');document.getElementById('mango_smileys').style.display='none'">
 
+				<img src="emoticons/long_laugh.png" style="height:5%; width:30px">
 
+				</td>
 
-                            <table style="width:100%">
+				<td style="width:20%"></td>
 
-                                <tr style="height:30px; vertical-align:middle" align="center">
+				<td style="width:20%"></td>
 
-                                    <td style="width:20%"
-                                        onClick="enteremoji('long_laugh');document.getElementById('mango_smileys').style.display='none'">
+				<td style="width:20%"></td>
 
-                                        <img src="emoticons/long_laugh.png" style="height:5%; width:30px">
+				<td style="width:20%"></td>
 
-                                    </td>
+				</tr>
 
-                                    <td style="width:20%"></td>
+				</table>
 
-                                    <td style="width:20%"></td>
+				
 
-                                    <td style="width:20%"></td>
+				</div>
 
-                                    <td style="width:20%"></td>
+				
 
-                                </tr>
+					 </td>
 
-                            </table>
+					 <td style=" width:65%; padding-top:0px">
 
+					 <input type="hidden" name="convref" id="convref" value="" />
 
+					 <input type="hidden" name="convuser" id="convuser" value="" />
 
-                        </div>
+					<input type="hidden" id="convusermsg" name="convusermsg"/>
 
+					<div onkeyup="myFunctionsuggestiontype()" contentEditable="true" id="convusermsg_div" 
 
+					onfocusout="if(document.getElementById('convusermsg_div').innerHTML==''){document.getElementById('convusermsg_div').innerHTML='Type your message here...';}" 
 
-                    </td>
+					onclick="if(document.getElementById('convusermsg_div').innerHTML=='Type your message here...'){document.getElementById('convusermsg_div').innerHTML='';}" 
 
-                    <td style=" width:65%; padding-top:0px">
+					style=" outline:none; border:2px #555 solid; font-size:13px; min-height:40px; max-height:45px; overflow-x:hidden; max-width:90%; overflow-x:auto; width:90%; padding-top:3px; border-radius: 15px; overflow-y:auto">Type your message here...</div>
 
-                        <input type="hidden" name="convref" id="convref" value="" />
+					</td>
 
-                        <input type="hidden" name="convuser" id="convuser" value="" />
+					<td style="width:10%; padding-top:22px">
 
-                        <input type="hidden" id="convusermsg" name="convusermsg" />
+					
 
-                        <div onkeyup="myFunctionsuggestiontype()" contentEditable="true" id="convusermsg_div"
-                            onfocusout="if(document.getElementById('convusermsg_div').innerHTML==''){document.getElementById('convusermsg_div').innerHTML='Type your message here...';}"
-                            onclick="if(document.getElementById('convusermsg_div').innerHTML=='Type your message here...'){document.getElementById('convusermsg_div').innerHTML='';}"
-                            style=" outline:none; border:2px #555 solid; font-size:13px; min-height:40px; max-height:45px; overflow-x:hidden; max-width:90%; overflow-x:auto; width:90%; padding-top:3px; border-radius: 15px; overflow-y:auto">
-                            Type your message here...</div>
+                    <i onClick="if((document.getElementById('convref').value) && (document.getElementById('convusermsg_div').innerHTML!=='Type your message here...')){sendsubmit();refreshingconv2(document.getElementById('convref').value);}" class="fa fa-send" style="height:40px; width:40px"></i>
 
-                    </td>
+					
 
-                    <td style="width:10%; padding-top:22px">
+					</td>
 
+					<td style="width:10%; padding-top:2px">
 
+					
+								<div 
 
-                        <i onClick="if((document.getElementById('convref').value) && (document.getElementById('convusermsg_div').innerHTML!=='Type your message here...')){sendsubmit();refreshingconv2(document.getElementById('convref').value);}"
-                            class="fa fa-send" style="height:40px; width:40px"></i>
+								class="attach" 
 
-
-
-                    </td>
-
-                    <td style="width:10%; padding-top:2px">
-
-
-                        <div class="attach" style="float:right;
+								style="float:right;
 
 								padding-right: 10px; display:none;">
 
-                            <i class="fal fa-paperclip fa-lg" style="cursor: pointer;" id="menu-attach"></i>
+                                	<i class="fal fa-paperclip fa-lg" 
 
-                            <div class="dropdown-content-attach" id="dropdown-content-attach"
-                                style="bottom:105px; border-radius:5px; background:#06f; padding-top:10px; width:50px; height:190px">
+									style="cursor: pointer;" 
 
-                                <div onClick="document.getElementById('mango_send_image').setAttribute('class','divbottomdockhandup');document.getElementById('mango_send_image').style.display='';"
-                                    id="image-attach"
-                                    style="border-radius:50%; margin-top:5px; color:#fff; height:30px; width:30px">
+									id="menu-attach"></i>
 
-                                    <i class="far fa-image fa-lg"></i>
+                                		<div class="dropdown-content-attach" 
+
+										id="dropdown-content-attach" style="bottom:105px; border-radius:5px; background:#06f; padding-top:10px; width:50px; height:190px">
+
+                                    		<div onClick="document.getElementById('mango_send_image').setAttribute('class','divbottomdockhandup');document.getElementById('mango_send_image').style.display='';" 
+
+											id="image-attach" style="border-radius:50%; margin-top:5px; color:#fff; height:30px; width:30px">
+
+                                        		<i class="far fa-image fa-lg"></i>
+
+                                    		</div>
+
+                                    <br>
+
+                                    		<div onClick="document.getElementById('mango_send_video').setAttribute('class','divbottomdockhandup');document.getElementById('mango_send_video').style.display='';" 
+
+											id="camera-attach" style="border-radius:50%; margin-top:5px; color:#fff; height:30px; width:30px">
+
+                                        		<i class="fas fa-camera-retro fa-lg"></i>
+
+                                    		</div>
+
+
+                                    <br>
+
+                                    		<div onClick="document.getElementById('mango_code').setAttribute('class','divbottomdockhandup');document.getElementById('mango_code').style.display='';" 
+
+											id="camera-attach" style="border-radius:50%; margin-top:5px; color:#fff; height:30px; width:30px">               
+
+											<i class="fas fa-location fa-lg"></i>
+
+                                    		</div>
+
+                                    <br>
+
+                                    <br>
+
+                                    </div>
 
                                 </div>
 
-                                <br>
+                               
 
-                                <div onClick="document.getElementById('mango_send_video').setAttribute('class','divbottomdockhandup');document.getElementById('mango_send_video').style.display='';"
-                                    id="camera-attach"
-                                    style="border-radius:50%; margin-top:5px; color:#fff; height:30px; width:30px">
+								<script id="menu-attach-script">
 
-                                    <i class="fas fa-camera-retro fa-lg"></i>
+	
 
-                                </div>
-
-
-                                <br>
-
-                                <div onClick="document.getElementById('mango_code').setAttribute('class','divbottomdockhandup');document.getElementById('mango_code').style.display='';"
-                                    id="camera-attach"
-                                    style="border-radius:50%; margin-top:5px; color:#fff; height:30px; width:30px">
-
-                                    <i class="fas fa-location fa-lg"></i>
-
-                                </div>
-
-                                <br>
-
-                                <br>
-
-                            </div>
-
-                        </div>
+									$(document).ready(function(){
 
 
 
-                        <script id="menu-attach-script">
-                        $(document).ready(function() {
+										$("#menu-attach").click(function(){
+
+										$(".dropdown-content-attach").toggle(700);
+
+										$("#mango_send_image").hide(300);
+
+										$("#mango_send_video").hide(300);
+
+										});
+
+									
+
+									});
+
+								</script>
+
+
+					</td>
+
+                         </tr>
+
+						 </table>     
 
 
 
-                            $("#menu-attach").click(function() {
+</div>
 
-                                $(".dropdown-content-attach").toggle(700);
-
-                                $("#mango_send_image").hide(300);
-
-                                $("#mango_send_video").hide(300);
-
-                            });
-
-
-
-                        });
-                        </script>
-
-
-                    </td>
-
-                </tr>
-
-            </table>
-
-
-
-        </div>
-
-    </div>
+</div>
 </div>
 
 </div>
@@ -943,46 +913,67 @@ function profimg($a)
 <span style="display:none" id="convnorepeat"></span>
 
 <script type="text/javascript">
-var bb;
+
+
+var bb;			
 
 var scrolled = 0;
 
 
 
 
-function refreshingconv(e) {
-    if (bb !== 'undefined') {
+function refreshingconv(e){
+if(bb!=='undefined'){
 
-        clearInterval(bb);
+clearInterval(bb);
 
-    }
+}
 
 
-    $.ajax({
 
-        type: 'POST',
 
-        url: '../webapp_resources/conversations.php',
+$.ajax({
 
-        dataType: 'html',
+			type:'POST',
 
-        data: {
-            user: e
-        },
+			url:'views/layout/header-components/header-top_chat_data.php',
 
-        cache: false,
+			dataType:'html',
 
-        success: function(response) {
+			data:{user:e},
 
-            document.getElementById('conversations').innerHTML = response;
-            document.getElementById('currentconv').scrollIntoView();
-            bb = setInterval(function() {
-                refreshingconv3(e);
-            }, 3000);
+			cache:false,
 
-        }
+			success: function(response){
 
-    });
+			document.getElementById('mango_left_chats').innerHTML=response;
+
+			}
+
+			});
+			
+			
+$.ajax({
+
+			type:'POST',
+
+			url:'../webapp_resources/conversations.php',
+
+			dataType:'html',
+
+			data:{user:e},
+
+			cache:false,
+
+			success: function(response){
+
+			document.getElementById('conversations').innerHTML=response;
+document.getElementById('currentconv').scrollIntoView();
+			bb = setInterval(function(){refreshingconv3(e);},3000);
+
+			}
+
+			});
 
 
 
@@ -992,35 +983,32 @@ function refreshingconv(e) {
 
 
 
-function refreshingconv3(z) {
+function refreshingconv3(z){
 
-    $.ajax({
+$.ajax({
 
-        type: 'POST',
+			type:'POST',
 
-        url: '../webapp_resources/conversations.php',
+			url:'../webapp_resources/conversations.php',
 
-        dataType: 'html',
+			dataType:'html',
 
-        data: {
-            user: z
-        },
+			data:{user:z},
 
-        cache: false,
+			cache:false,
 
-        success: function(response) {
-            var zz = document.getElementById('convnorepeat');
-            if (zz.innerHTML != response.length) {
+			success: function(response){
+var zz = document.getElementById('convnorepeat');
+			    if(zz.innerHTML!=response.length){
+			        
+			zz.innerHTML=response.length;
 
-                zz.innerHTML = response.length;
+			document.getElementById('conversations').innerHTML=response;
 
-                document.getElementById('conversations').innerHTML = response;
+}
+			}
 
-            }
-        }
-
-    });
-
+			});
 
 
 }
@@ -1033,100 +1021,109 @@ function refreshingconv3(z) {
 
 
 
-function refreshingconv2(e) {
+function refreshingconv2(e){
 
+    
 
+$.ajax({
 
-    $.ajax({
+			type:'POST',
 
-        type: 'POST',
+			url:'../webapp_resources/conversations.php',
 
-        url: '../webapp_resources/conversations.php',
+			dataType:'html',
 
-        dataType: 'html',
+			data:{user:e},
 
-        data: {
-            user: e
-        },
+			cache:false,
 
-        cache: false,
+			success: function(response){
 
-        success: function(response) {
+			document.getElementById('conversations').innerHTML=response;
 
-            document.getElementById('conversations').innerHTML = response;
+			}
 
-        }
-
-    });
+			});
 
 
 
 }
+
 </script>
 
+				
 
-
-
-
+				
+				
 <style>
-.drawermenu_option {
-    width: 100%;
-    height: 40px;
-    padding: 10px;
-    color: #fff;
-    font-size: 16px;
-}
-
-.drawermenu_option:hover {
-    width: 100%;
-    height: 40px;
-    background: #f90;
-    padding: 10px;
-    color: #fff;
-    font-weight: 600;
-    font-size: 16px;
-}
+    .drawermenu_option{
+        width:100%;
+        height:40px;
+        padding:10px;
+        color:#fff;
+        font-size:16px;
+    }
+    .drawermenu_option:hover{
+        width:100%;
+        height:40px;
+        background:#f90;
+        padding:10px;
+        color:#fff;
+        font-weight:600;
+        font-size:16px;
+    }
 </style>
 
 
 
 
 
-<div id="internet_status" align="center"
-    style=" position:fixed; z-index:999999999; top:60px; right:5%; min-height:65px; width:200px; color:#fff; font-size:13px; padding:7px; background:#f00; border-radius:5px; box-shadow:2px 2px 2px #555; display:none">
+				<div id="internet_status" align="center" style=" position:fixed; z-index:999999999; top:60px; right:5%; min-height:65px; width:200px; color:#fff; font-size:13px; padding:7px; background:#f00; border-radius:5px; box-shadow:2px 2px 2px #555; display:none">
 
-    Page too dormant or check your internet connection.<br>Some of your previous actions may not have been saved.
+				    Page too dormant or check your internet connection.<br>Some of your previous actions may not have been saved.
 
-    <br><br>
+				    <br><br>
 
-    <span onClick="document.getElementById('internet_status').style.display='none';"
-        style="padding:7px; border-radius:5px; color:#f90">OK</span>
+				    <span onClick="document.getElementById('internet_status').style.display='none';" style="padding:7px; border-radius:5px; color:#f90">OK</span>
 
-</div>
+				</div>
 
 
 
 
 
 
-<div id="drawer3" align="center"
-    style="position:fixed; display:none; top:0px; right:0px; width:30%; height:100%; z-index:99999999; box-shadow:2px 2px 10px #555; background:#fff; font-size:14px; color:#000">
-    <b style="font-size:18px; color:#000">
-        Create Contact
-    </b>
-    <br>
-    <br>
+<div id="drawer3" align="center" style="position:fixed; display:none; top:0px; right:0px; width:30%; height:100%; z-index:99999999; box-shadow:2px 2px 10px #555; padding-top:50px; background:#fff; font-size:14px; color:#000">
+<b style="font-size:18px; color:#000">
+Create Contact
+</b>
+<br>
+<br>
 
 
-    <b>Add a new mango contact</b>
+					<b>Add a new mango contact</b>
 
-    <br>
+				<br>
 
-    <br>
+				<br>
 
-    <form method="post" action="contacts.php">
+					<form method="post" 
 
-        <input type="tel" name="addcontact_number" id="addcontact_number" placeholder="Phone Number" required style=" 
+					action="contacts.php">
+
+						<input 
+
+						type="tel" 
+
+						name="addcontact_number" 
+
+						id="addcontact_number" 
+
+						placeholder="Phone Number" 
+
+						required 
+
+						style=" 
 
 						text-align:center; 
 
@@ -1138,148 +1135,61 @@ function refreshingconv2(e) {
 
 						border-radius:5px;
 
-						outline:none;" />
+						outline:none;"/>
 
-        <br>
+				<br>
 
-        <br>
+				<br>
 
-        <input type="submit" id="addcontact_button" value="Save Contact" />
+						<input 
 
-    </form>
+						type="submit" 
 
+						id="addcontact_button"
 
-    <style>
-    #addcontact_button {
+						value="Save Contact"/>
 
-        width: 100px;
-
-        height: 30px;
-
-        background: #888889;
-
-        color: #ffffff;
-
-        border: 1px solid #E6E6E6;
-
-        border-radius: 5px;
-
-        cursor: pointer;
-
-        outline: none;
-
-    }
-
-    #addcontact_button:hover {
-
-        background-color: #fdbd4e;
-
-        color: #ffffff;
-
-        box-shadow: 2px 2px 5px grey;
-
-        border: none;
-
-    }
-    </style>
-
-
-</div>
-
-
-
-
-
-
-
-<div id="drawer2"
-    style="position:fixed; transition:all .5s; width:35%; display:none; z-index:99999999; height:100%; background:#fff; left:0px; top:0px; z-index:999999; padding:10px; padding-top:30px; border:1px #006 solid; box-shadow:0 0 5px 5px #222; color:#000">
-    <b style="font-size:18px; color:#000">
-        Contact List
-    </b>
-
-    <br>
-    <br>
-
-    <?php include('webapp_resources/allcontacts.php'); ?>
-
-
-</div>
-
-
-
-
-
-
-
-
-
-<div onmouseover="document.getElementById('drawernotify').style.display='none';document.getElementById('drawerprofile').style.display='none';"
-    style="background:#eee; display:none; height:100%; margin-top:0px; width:100%; z-index:99999; color:#000">
-
-</div>
+				</form>
 
 
 <style>
-.drawermenuinfo_option_title {
-    width: 100%;
-    height: 40px;
-    padding: 10px;
-    font-weight: 600;
-    color: #000;
-    font-size: 12px;
-}
 
-.drawermenuinfo_option {
-    width: 100%;
-    height: 40px;
-    padding: 10px;
-    color: #000;
-    font-size: 16px;
-}
+	#addcontact_button{
 
-.drawermenuinfo_option_drop_box {
-    background: #eee;
-    width: 98%;
-    border-radius: 5px;
-    min-height: 40px;
-    padding: 10px;
-    color: #000;
-    font-size: 16px;
-}
+		width:100px; 
 
-.drawermenuinfo_option_drop {
-    background: #eee;
-    width: 98%;
-    border-radius: 5px;
-    min-height: 40px;
-    padding: 10px;
-    color: #000;
-    font-size: 16px;
-}
+		height:30px; 
 
-.drawermenuinfo_option:hover {
-    width: 100%;
-    height: 40px;
-    background: #f60;
-    padding: 10px;
-    color: #fff;
-    font-weight: 600;
-    font-size: 16px;
-}
+		background:  #888889;
 
-.drawermenuinfo_option_drop:hover {
-    width: 100%;
-    height: 40px;
-    background: #fff;
-    padding: 10px;
-    color: #000;
-    font-weight: 600;
-    font-size: 16px;
-}
+		color:#ffffff;
+
+		border:1px solid #E6E6E6;
+
+		border-radius: 5px;
+
+		cursor:pointer;
+
+		outline:none;
+
+	}
+
+	#addcontact_button:hover{
+
+		background-color: #fdbd4e;
+
+		color: #ffffff;
+
+		box-shadow: 2px 2px 5px grey;
+
+		border: none;
+
+	}
+
 </style>
 
 
+</div>
 
 
 
@@ -1287,266 +1197,16 @@ function refreshingconv2(e) {
 
 
 
+<div id="drawer2" style="position:fixed; transition:all .5s; overflow-y:auto; width:35%; display:none; z-index:99999999; height:100%; background:#fff; left:0px; top:0px; z-index:999999; padding:10px; padding-top:30px; border:1px #006 solid; box-shadow:0 0 5px 5px #222; color:#000">
+<b style="font-size:18px; color:#000">
+Contact List
+</b>
 
+<br>
+<br>
 
+<?php include('../webapp_resources/allcontacts.php'); ?>
 
-
-
-
-
-
-<div id="drawer1" class="navscroll"
-    style="position:fixed; display:none; top:0px; left:0px; width:40%; height:100%; z-index:99999999; box-shadow:2px 2px 10px #555; overflow-y:auto; background:#fff; font-size:14px; color:#000">
-
-
-
-    <div id="mango_left_chats">
-        <div style="padding:15px; margin-top:20px; height:30px">
-            <b style="font-size:18px; margin-bottom:20px; color:#000">
-                Chats
-            </b>
-        </div>
-        <br>
-        <br>
-        <?php
-
-		$c1 = 'Masked';
-
-		$c2 = 'User';
-
-		$query2 = "SELECT * FROM mango_chats WHERE username='" . chat_number . "' OR contact='" . chat_number . "' ORDER BY date DESC LIMIT 100";
-
-
-
-		//Execute the query
-
-		$result2 = mysqli_query($conn, $query2);
-
-
-
-		if (mysqli_num_rows($result2) > 0) {
-
-
-
-			while ($row2 = mysqli_fetch_array($result2)) {
-
-				$c7 = $row2['ref'];
-
-				$c5 = $row2['date'];
-
-				$c6 = $row2['time'];
-
-				$c3 = $row2['alerts'];
-
-
-
-				if ($row2['username'] == number) {
-
-					$c4 = $row2['contact'];
-				} else {
-
-					$c4 = $row2['username'];
-				}
-
-
-
-				$query4 = "SELECT * FROM mango_user_credentials WHERE mobile_number='$c4' LIMIT 1";
-
-
-
-				//Execute the query
-
-				$result4 = mysqli_query($connect, $query4);
-
-
-
-				if ($row4 = mysqli_fetch_array($result4)) {
-
-					if ($row4['first_name'] != '' && $row4['last_name'] != ' ') {
-
-						$c1 = $row4['first_name'];
-					}
-
-					if ($row4['last_name'] != '' && $row4['last_name'] != ' ') {
-
-						$c2 = $row4['last_name'];
-					}
-				}
-
-
-
-		?>
-
-
-
-        <table class="mangochats<?php echo $c7; ?>" title="Tap to talk to <?php echo $c1; ?>"
-            onClick="document.getElementById('conversation_name').innerHTML='<?php echo $c1 . ' ' . $c2; ?>';document.getElementById('drawer1').style.display='none';document.getElementById('drawer2').style.display='none';document.getElementById('drawer3').style.display='none';refreshingconv('<?php echo $c7; ?>');document.getElementById('convref').value='<?php echo $c7; ?>';document.getElementById('convuser').value='<?php echo $c4; ?>';document.getElementById('img_contact').value='<?php echo $c4; ?>';document.getElementById('img_chatref').value='<?php echo $c7; ?>';document.getElementById('vid_contact').value='<?php echo $c4; ?>';document.getElementById('vid_chatref').value='<?php echo $c7; ?>';document.getElementById('mangostore_conv').style.display='';"
-            style="width:100%; min-height:75px; color:#000; border-bottom:1px #555 solid">
-            <tr style="vertical-align:middle">
-                <td align="center" style="width:30%">
-
-                    <img src="<?php echo profimg($c4); ?>" alt="Youre talking to <?php echo $c1; ?>"
-                        style="border:4px #555 solid; height:70px; width:70px; border-radius:0 20px 20px 20px">
-
-                </td>
-
-                <td style="width:70%" align="left">
-                    <small style="float:right; font-size:14px; margin-right:10px">
-
-                        <?php
-
-								try {
-
-									if (isset($c5) && !empty($c5) && $c5 !== 0) {
-
-										$az = $c5;
-
-										$bz = $c6;
-
-										$dealday = $az . ' ' . $bz;
-
-										$dealtime = strtotime($dealday);
-
-										$dealtime = date("y-m-d h:i:s a", $dealtime);
-
-										$dealtime = new datetime($dealtime);
-
-										$timez = date("y-m-d h:i:s a");
-
-										$timez = new datetime($timez);
-
-
-
-										$remtime = $dealtime->diff($timez);
-
-										$remtimea = $remtime->format('%Y');
-
-										$remtimeb = $remtime->format('%M');
-
-										$remtimec = $remtime->format('%D');
-
-										$remtimed = $remtime->format('%H');
-
-										$remtimee = $remtime->format('%I');
-
-										$remtimef = $remtime->format('%S');
-
-
-
-										if ($remtimea > 0) {
-
-											$remtime = $c5;
-										} else {
-
-
-
-											if ($remtimeb > 0) {
-
-												$remtime = $c5;
-											} else {
-
-												if ($remtimec > 0) {
-
-													$remtime = $c5;
-												} else {
-
-													if ($remtimed > 0) {
-
-														$remtime = intval($remtimed) . 'hrs';
-													} else {
-
-														if ($remtimee > 0) {
-
-															$remtime = intval($remtimee) . 'mins';
-														} else {
-
-															if ($remtimef > 0) {
-
-																$remtime = intval($remtimef) . 'sec';
-															}
-														}
-													}
-												}
-											}
-										}
-									} else {
-
-										$remtime = 'Long time';
-									}
-
-									echo $remtime;
-								} catch (Exception $e) {
-
-									echo '...';
-								}
-
-								?></small>
-
-                    <span style="font-size:14px; font-weight:600"><?php $c10 = $c1 . ' ' . $c2;
-
-																			if (strlen($c10) < 25) {
-																				echo $c10;
-																			} else {
-																				echo substr($c10, 0, 20) . '...';
-																			} ?>&nbsp;<b style="color:#f60; font-size:18px; margin-top:2px">&bull;</b></span>
-                    <br>
-
-
-                    <div style="width:100%; overflow:hidden">
-
-                        <?php
-
-								$query5 = "SELECT * FROM mango_conversations WHERE ref='$c7' ORDER BY id DESC LIMIT 1";
-
-								//Execute the query
-
-								$result5 = mysqli_query($connect, $query5);
-
-								if (mysqli_num_rows($result5) > 0) {
-
-									if ($row5 = mysqli_fetch_array($result5)) {
-
-										//if(strlen($row5['message'])<25){echo $row5['message'];}else{echo substr($row5['message'],0,20).'...';} 
-										echo $row5['message'];
-									}
-								}
-
-								?>.</div>
-
-                    <br>
-
-                    <small>
-                        <p>
-                            Tap to continue chatting
-                        </p>
-                    </small>
-
-                    <small>
-                        <p style="color:#fff; font-weight:600"><?php if ($c3 > 0) {
-																			echo $c3; ?> Threads<?php } ?></p>
-                    </small>
-
-                </td>
-            </tr>
-        </table>
-
-
-
-        <?php
-
-			}
-		} else {
-
-			echo "<p align='center' style='color:#f20; font-weight:600'>Start some chats</p>";
-		}
-
-
-
-		?>
-
-
-
-    </div>
 
 </div>
 
@@ -1558,130 +1218,467 @@ function refreshingconv2(e) {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-<div id="mango_fruit" class="divbottomdockhandup" align="center"
-    style=" display:none; overflow-y:auto; position:fixed; top:30%; left:10%; width:30%; height:40%; background:#006; color:#000; overflow-y:auto; box-shadow:0 0 5px 5px #555; border-radius:10px; padding:10px">
-
-
-
-    <div align="right"
-        onClick="document.getElementById('mango_code').setAttribute('class','divdropdockhandup');document.getElementById('mango_fruit').style.display='none'"
-        style="width:100%; font-size:24px; height:40px; border-bottom:1px #ddd solid; color:#000; padding-top:5px">
-
-        &times; &nbsp;&nbsp;
-
+<div onmouseover="document.getElementById('drawernotify').style.display='none';document.getElementById('drawerprofile').style.display='none';" style="background:#eee; overflow-y:auto; display:none; height:100%; margin-top:0px; width:100%; z-index:99999; color:#000">
+    
     </div>
+    
+    
+<style>
+    .drawermenuinfo_option_title{
+        width:100%;
+        height:40px;
+        padding:10px;
+        font-weight:600;
+        color:#000;
+        font-size:12px;
+    }
+    .drawermenuinfo_option{
+        width:100%;
+        height:40px;
+        padding:10px;
+        color:#000;
+        font-size:16px;
+    }
+    .drawermenuinfo_option_drop_box{
+        background:#eee;
+        width:98%;
+        border-radius:5px;
+        min-height:40px;
+        padding:10px;
+        color:#000;
+        font-size:16px;
+    }
+    .drawermenuinfo_option_drop{
+        background:#eee;
+        width:98%;
+        border-radius:5px;
+        min-height:40px;
+        padding:10px;
+        color:#000;
+        font-size:16px;
+    }
+    .drawermenuinfo_option:hover{
+        width:100%;
+        height:40px;
+        background:#f60;
+        padding:10px;
+        color:#fff;
+        font-weight:600;
+        font-size:16px;
+    }
+    .drawermenuinfo_option_drop:hover{
+        width:100%;
+        height:40px;
+        background:#fff;
+        padding:10px;
+        color:#000;
+        font-weight:600;
+        font-size:16px;
+    }
+</style>
+
+	    
+	    
+	    
+	    
+	    
+	    
+	    
+	    
+	    
+	    
+	    
+	    
+	    
 
 
 
-    <div align="left" class="mangocodes"
-        onClick="document.getElementById('mango_bg').style.display='';document.getElementById('mango_video').style.display=''">
+<div id="drawer1" class="navscroll" style="position:fixed; display:none; top:0px; left:0px; width:40%; height:100%; z-index:99999999; box-shadow:2px 2px 10px #555; overflow-y:auto; background:#fff; font-size:14px; color:#000">
 
-        Make your day Video
+        
+<div style="padding:15px; margin-bottom:20px; margin-top:20px; height:30px">
+<b style="font-size:18px; color:#000">
+Chats
+</b>
+</div>
 
-        <table style="float:right; margin-top:-5px; height:30px; width:150px">
+	<div id="mango_left_chats" style=" overflow-y:auto; height:80vh">
 
-            <tr style="vertical-align:middle" align="center">
+	<?php
+				$c1='Masked';
 
-                <td style="width:40%" align="left">
+				$c2='User';
 
-                    <b style="font-size:12px; color:#070">Choose</b>
+	$query2="SELECT * FROM mango_chats WHERE username='".chat_number."' OR contact='".chat_number."' ORDER BY date DESC LIMIT 100";
 
-                </td>
 
-                <td style="width:60%">
 
-                    <input type="button"
-                        style="width:98%; height:20px; font-size:10px; border-radius:3px; color:#fff; background:#f60; border:1px #f60 solid"
-                        value="Send Mango">
+    //Execute the query
 
-                </td>
+    $result2=mysqli_query($connect, $query2);
 
-            </tr>
+	
 
-        </table>
+		if(mysqli_num_rows($result2)>0){
 
+		
+
+		while($row2=mysqli_fetch_array($result2)){
+
+		$c7=$row2['ref'];
+
+		$c5=$row2['date'];
+
+		$c6=$row2['time'];
+
+		$c3=$row2['alerts'];
+
+		
+
+		if($row2['username']==number){
+
+		$c4=$row2['contact'];
+
+		}else{
+
+		$c4=$row2['username'];
+
+		}
+
+		
+
+		$query4="SELECT * FROM mango_user_credentials WHERE mobile_number='$c4' LIMIT 1";
+
+
+
+    //Execute the query
+
+    $result4=mysqli_query($connect, $query4);
+
+	
+
+		if($row4=mysqli_fetch_array($result4)){
+
+		if($row4['first_name']!='' && $row4['last_name']!=' '){
+
+		$c1=$row4['first_name'];
+
+		}
+
+		if($row4['last_name']!='' && $row4['last_name']!=' '){
+
+		$c2=$row4['last_name'];
+
+		}
+
+		}
+
+		
+
+  ?>
+
+  
+
+				<table class="mangochats<?php echo $c7; ?>" title="Tap to talk to <?php echo $c1; ?>" onClick="document.getElementById('conversation_name').innerHTML='<?php echo $c1.' '.$c2; ?>';document.getElementById('drawer1').style.display='none';document.getElementById('drawer2').style.display='none';document.getElementById('drawer3').style.display='none';refreshingconv('<?php echo $c7; ?>');document.getElementById('convref').value='<?php echo $c7; ?>';document.getElementById('convuser').value='<?php echo $c4; ?>';document.getElementById('img_contact').value='<?php echo $c4; ?>';document.getElementById('img_chatref').value='<?php echo $c7; ?>';document.getElementById('vid_contact').value='<?php echo $c4; ?>';document.getElementById('vid_chatref').value='<?php echo $c7; ?>';document.getElementById('mangostore_conv').style.display='';" style="width:100%; min-height:75px; color:#000; border-bottom:1px #555 solid">
+<tr style="vertical-align:middle">
+    <td align="center" style="width:30%">
+        
+                                        <img src="<?php echo profimg($c4); ?>" title="Youre talking to <?php echo $c1; ?>" style="border:4px #555 solid; height:70px; width:70px; border-radius:0 20px 20px 20px">
+
+    </td>
+
+    <td style="width:70%" align="left">
+                                        <small style="float:right; font-size:14px; margin-right:10px">
+
+										<?php
+
+										try{
+
+if(isset($c5) && !empty($c5) && $c5!==0){
+
+$az = $c5;
+
+$bz = $c6;
+
+$dealday = $az.' '.$bz;
+
+$dealtime = strtotime($dealday);
+
+$dealtime = date("y-m-d h:i:s a", $dealtime);
+
+$dealtime = new datetime($dealtime);
+
+$timez = date("y-m-d h:i:s a");
+
+$timez = new datetime($timez);
+
+
+
+$remtime = $dealtime->diff($timez);
+
+$remtimea=$remtime->format( '%Y' );
+
+$remtimeb=$remtime->format( '%M' );
+
+$remtimec=$remtime->format( '%D' );
+
+$remtimed=$remtime->format( '%H' );
+
+$remtimee=$remtime->format( '%I' );
+
+$remtimef=$remtime->format( '%S' );
+
+
+
+if($remtimea>0){
+
+    $remtime=$c5;
+
+}else{
+
+   
+
+ if($remtimeb>0){
+
+     $remtime=$c5;
+
+}else{
+
+    if($remtimec>0){
+
+    $remtime=$c5;
+
+}else{
+
+  if($remtimed>0){
+
+     $remtime=intval($remtimed).'hrs';
+
+}else{
+
+    if($remtimee>0){
+
+     $remtime=intval($remtimee).'mins';
+
+}else{
+
+    if($remtimef>0){
+
+     $remtime=intval($remtimef).'sec';
+
+}
+
+}
+
+}
+
+}
+
+}  
+
+}
+
+
+
+}else{
+
+   $remtime='Long time';  
+
+}
+
+echo $remtime; }catch(Exception $e){
+
+echo '...';
+
+}
+
+?></small>
+
+                                        <span style="font-size:14px; font-weight:600"><?php $c10 = $c1.' '.$c2; 
+
+		if(strlen($c10)<25){echo $c10;}else{echo substr($c10,0,20).'...';} ?>&nbsp;<b style="color:#f60; font-size:18px; margin-top:2px">&bull;</b></span>
+<br>
+                        
+                        
+                                        <div style="width:100%; overflow:hidden">
+
+									<?php
+
+	$query5="SELECT * FROM mango_conversations WHERE ref='$c7' ORDER BY id DESC LIMIT 1";
+
+    //Execute the query
+
+    $result5=mysqli_query($connect, $query5);
+
+		if(mysqli_num_rows($result5)>0){
+
+		if($row5=mysqli_fetch_array($result5)){
+
+		//if(strlen($row5['message'])<25){echo $row5['message'];}else{echo substr($row5['message'],0,20).'...';} 
+echo $row5['message'];
+		 }
+
+		 }
+
+		 ?>.</div>
+		 
+<br>
+                        
+                                        <small><p>
+                                            Tap to continue chatting
+                                            </p>
+                                            </small>
+                                            
+                                        <small><p style="color:#fff; font-weight:600"><?php if($c3>0){ echo $c3; ?> Threads<?php } ?></p></small>
+
+                                    </td>
+</tr>
+</table>
+
+  
+
+                   <?php
+
+    }
+
+	
+
+	}else{
+
+		echo "<p align='center' style='color:#f20; font-size:24px; font-weight:600'>Start a chat.</p>";
+
+    }
+
+
+?>
+			
+	</div>
+        
     </div>
+    
+    
 
 
 
-    <div align="left" class="mangocodes"
-        onClick="document.getElementById('mango_bg').style.display='';document.getElementById('mango_image').style.display=''">
-
-        Make your day Image
-
-        <table style="float:right; margin-top:-5px; height:30px; width:150px">
-
-            <tr style="vertical-align:middle" align="center">
-
-                <td style="width:40%" align="left">
-
-                    <b style="font-size:12px; color:#070">Choose</b>
-
-                </td>
-
-                <td style="width:60%">
-
-                    <input type="button"
-                        style="width:98%; height:20px; font-size:10px; border-radius:3px; color:#fff; background:#f60; border:1px #f60 solid"
-                        value="Send Mango">
-
-                </td>
-
-            </tr>
-
-        </table>
-
-    </div>
 
 
 
-    <a href="gravity.php">
-
-        <div align="left" class="mangocodes">
-
-            Pilot Game
-
-            <table style="float:right; margin-top:-5px; height:30px; width:150px">
-
-                <tr style="vertical-align:middle" align="center">
-
-                    <td style="width:40%" align="left">
-
-                    </td>
-
-                    <td style="width:60%">
-
-                        <b style="font-size:12px">Play</b>
-
-                    </td>
-
-                </tr>
-
-            </table>
-
-        </div>
-
-    </a>
 
 
 
-    <br>
 
-    <br>
 
-    <!--
+
+
+
+
+
+
+
+
+				<div id="mango_fruit" class="divbottomdockhandup" align="center" style=" display:none; overflow-y:auto; position:fixed; top:30%; left:10%; width:30%; height:40%; background:#006; color:#000; overflow-y:auto; box-shadow:0 0 5px 5px #555; border-radius:10px; padding:10px">
+
+				
+
+				<div align="right" onClick="document.getElementById('mango_code').setAttribute('class','divdropdockhandup');document.getElementById('mango_fruit').style.display='none'" style="width:100%; font-size:24px; height:40px; border-bottom:1px #ddd solid; color:#000; padding-top:5px">
+
+				&times; &nbsp;&nbsp;
+
+				</div>
+
+				
+
+				<div align="left" class="mangocodes" onClick="document.getElementById('mango_bg').style.display='';document.getElementById('mango_video').style.display=''">
+
+				Make your day Video
+
+				<table style="float:right; margin-top:-5px; height:30px; width:150px">
+
+				<tr style="vertical-align:middle" align="center">
+
+				<td style="width:40%" align="left">
+
+				<b style="font-size:12px; color:#070">Choose</b>
+
+				</td>
+
+				<td style="width:60%">
+
+				<input type="button" style="width:98%; height:20px; font-size:10px; border-radius:3px; color:#fff; background:#f60; border:1px #f60 solid" value="Send Mango">
+
+				</td>
+
+				</tr>
+
+				</table>
+
+				</div>
+
+				
+
+				<div align="left" class="mangocodes" onClick="document.getElementById('mango_bg').style.display='';document.getElementById('mango_image').style.display=''">
+
+				Make your day Image
+
+				<table style="float:right; margin-top:-5px; height:30px; width:150px">
+
+				<tr style="vertical-align:middle" align="center">
+
+				<td style="width:40%" align="left">
+
+				<b style="font-size:12px; color:#070">Choose</b>
+
+				</td>
+
+				<td style="width:60%">
+
+				<input type="button" style="width:98%; height:20px; font-size:10px; border-radius:3px; color:#fff; background:#f60; border:1px #f60 solid" value="Send Mango">
+
+				</td>
+
+				</tr>
+
+				</table>
+
+				</div>
+
+				
+
+				<a href="gravity.php">
+
+				<div align="left" class="mangocodes">
+
+				Pilot Game
+
+				<table style="float:right; margin-top:-5px; height:30px; width:150px">
+
+				<tr style="vertical-align:middle" align="center">
+
+				<td style="width:40%" align="left">
+
+				</td>
+
+				<td style="width:60%">
+
+				<b style="font-size:12px">Play</b>
+
+				</td>
+
+				</tr>
+
+				</table>
+
+				</div>
+
+				</a>
+
+				
+
+				<br>
+
+				<br>
+
+				<!--
 
 				<div align="left" style="padding:10px; color:#f60; font-size:14px; width:90%; border-bottom:1px #ddd solid">
 
@@ -1901,75 +1898,57 @@ function refreshingconv2(e) {
 
 				-->
 
+				
 
+				
 
+				</div>
 
+				
 
-</div>
-
-
-
-
+				
 
 <style>
-div.divdockhandup {
-    animation: divdockhandup 3s;
+div.divdockhandup{
+  animation: divdockhandup 3s;
 }
 
 @keyframes divdockhandup {
-    10% {
-        transform: translate(0px, 100px) scale(0.7);
-    }
-
-    30% {
-        transform: translate(0px, 100px) scale(0.7);
-    }
-
-    100% {
-        transform: translate(0px, 1500px) scale(0.5);
-    }
+ 10% { transform: translate(0px, 100px) scale(0.7);}
+    30% { transform: translate(0px, 100px) scale(0.7);  }
+    100% { transform: translate(0px, 1500px) scale(0.5); }
 }
 
 
-div.divdropdockhandup {
-    animation: divdropdockhandup 3s;
+div.divdropdockhandup{
+  animation: divdropdockhandup 3s;
 }
 
 @keyframes divdropdockhandup {
-    20% {
-        transform: translate(0px, 0px) scale(0.4);
-    }
-
-    70% {
-        transform: translate(0px, 950px) rotate(1000deg) scale(0.4);
-        width: 50%;
-        height: 70%;
-    }
-
-    100% {
-        transform: translate(300px, 1500px) rotate(1200deg);
-        width: 0%;
-        height: 0;
-    }
+  20% { transform: translate(0px, 0px) scale(0.4); }
+   70% { transform: translate(0px, 950px) rotate(1000deg) scale(0.4); width:50%; height:70%; }
+    100% { transform: translate(300px, 1500px) rotate(1200deg); width:0%; height:0; }
 }
 
 
 
-div.divbottomdockhandup {
-    animation: divbottomdockhandup 2s;
+div.divbottomdockhandup{
+  animation: divbottomdockhandup 2s;
 }
 
 @keyframes divbottomdockhandup {
-    0% {
-        transform: translate(0px, 500px);
-    }
+0% { transform: translate(0px, 500px); }
 }
 </style>
 
 
 
 
-<div class="divbottomdockhandup" id="mango_webcam" align="center" style="display:none; 
+				<div class="divbottomdockhandup" id="mango_webcam" 
+
+				align="center" 
+
+				style="display:none; 
 
 				overflow-y:auto; 
 
@@ -1995,11 +1974,13 @@ div.divbottomdockhandup {
 
 				border-radius:10px;">
 
+		
 
+					<div align="left" 
 
-    <div align="left"
-        onClick="stop();document.getElementById('mango_webcam').setAttribute('class','divdropdockhandup');setTimeout(function(){document.getElementById('mango_webcam').style.display='none';},2500)"
-        style="width:100%; 
+					onClick="stop();document.getElementById('mango_webcam').setAttribute('class','divdropdockhandup');setTimeout(function(){document.getElementById('mango_webcam').style.display='none';},2500)" 
+
+					style="width:100%; 
 
 					font-size:35px; 
 
@@ -2015,287 +1996,308 @@ div.divbottomdockhandup {
 
 					padding-top:3px">
 
-        &nbsp;&nbsp;&minus;
+					&nbsp;&nbsp;&minus; 
 
-    </div>
+					</div>
 
+								
 
+				
 
+<style>
 
+#container {
 
-    <style>
-    #container {
+	width: 98%;
 
-        width: 98%;
+	height:80%;
 
-        height: 80%;
+}
 
-    }
+#videoElement {
 
-    #videoElement {
+	width: 100%;
 
-        width: 100%;
+	height: 100%;
 
-        height: 100%;
+	background-color: #666;
 
-        background-color: #666;
+}
 
-    }
-    </style>
-
-
-
-    <div style="margin-top:5px" id="container">
-
-        <video autoplay="true" id="videoElement">
-
-        </video>
-
-        <img src="">
-
-        <canvas style="display:none;">
-
-        </canvas>
-
-    </div>
+</style>
 
 
 
-    <img id="imgtaken" src="" style="position:fixed; display:none; top:70px; right:20px; height:60px; width:60px" />
+					<div style="margin-top:5px" id="container">
+
+						<video autoplay="true" 
+
+						id="videoElement">
+
+						</video>
+
+						<img src="">
+
+						<canvas style="display:none;">
+
+						</canvas>
+
+					</div>
 
 
 
-    <div align="center" style="width:100%; 
+<img id="imgtaken" src="" style="position:fixed; display:none; top:70px; right:20px; height:60px; width:60px"/>
+
+
+
+					<div align="center" 
+
+					style="width:100%; 
 
 					padding-top:10px;
 
 					height:auto;">
 
-        <table style="width:100%;">
+						<table style="width:100%;">
 
-            <tr style="vertical-align:middle">
+							<tr style="vertical-align:middle">
 
-                <td style="width:10%" align="center">
+								<td style="width:10%"
 
-                    <button style="border:1px #006 solid; background:#008" onClick="startcam()" id="start-cam-button">
+								align="center">
 
-                        <i class="fas fa-play fa-lg"></i>
+									<button style="border:1px #006 solid; background:#008" onClick="startcam()"
 
-                    </button>
+									id="start-cam-button">
 
-                </td>
+										<i class="fas fa-play fa-lg"></i>
 
-                <td style="width:10%" align="center">
+									</button>
 
-                    <button style="border:1px #006 solid; background:#008" onClick="stop()" id="stop-cam-button">
+								</td>
 
-                        <i class="fas fa-stop fa-lg"></i>
+								<td style="width:10%"
 
-                    </button>
+								align="center">
 
-                </td>
+									<button style="border:1px #006 solid; background:#008" onClick="stop()"
 
-                <td style="width:10%" align="center">
+									id="stop-cam-button">
 
-                    <a style="border:none; background:none; color:#fff" id="screenshotButton">
+									<i class="fas fa-stop fa-lg"></i>
 
-                        Screenshot
+									</button>
 
-                    </a>
+								</td>
 
-                </td>
+								<td style="width:10%"
 
-                <td style="width: 10%;" align="center">
+								align="center">
 
-                    <a style="border:none; background:none; color:#fff" href="" id="dlink" download>
+									<a style="border:none; background:none; color:#fff" id="screenshotButton">
 
-                        Download
+									Screenshot
 
-                    </a>
+									</a>
 
-                </td>
-                <td style="width: 12%;" align="center">
+								</td>
 
-                    <a style="border:none; background:none; color:#fff" id="webcamshare">
+								<td style="width: 10%;"
 
-                        Send Photo
+								align="center">
 
-                    </a>
+									<a style="border:none; background:none; color:#fff" href="" id="dlink" download>
 
-                </td>
-                <td style="width: 48%;" align="center">
-                </td>
+								Download
 
-            </tr>
+									</a>
 
-        </table>
+								</td>
+								<td style="width: 12%;"
 
+								align="center">
 
+									<a style="border:none; background:none; color:#fff" id="webcamshare">
 
-    </div>
+								Send Photo
 
+									</a>
 
+								</td>
+								<td style="width: 48%;"
 
-    <style>
-    #screenshotButton,
+								align="center">
+								    </td>
 
-    #start-cam-button,
+							</tr>
 
-    #stop-cam-button,
+					</table>
 
-    #pic-download-button {
+					
 
-        padding: 7px 15px;
+					</div>
 
-        border-radius: 5px;
 
-        background: #888889;
 
-        color: #ffffff;
+<style>
 
-        border: 1px solid #E6E6E6;
+	#screenshotButton, 
 
-        outline: none;
+	#start-cam-button, 
 
-        cursor: pointer;
+	#stop-cam-button,
 
-    }
+	#pic-download-button{
 
-    #screenshotButton:hover,
+		padding: 7px 15px;
 
-    #start-cam-button:hover,
+		border-radius: 5px;
 
-    #stop-cam-button:hover,
+		background:  #888889;
 
-    #pic-download-button:hover {
+		color:#ffffff;
 
-        background: #fdbd4e;
+		border:1px solid #E6E6E6;
 
-        color: #ffffff;
+		outline: none;
 
-        box-shadow: 2px 2px 5px grey;
+		cursor: pointer;
 
-        border: none;
+	}
 
-    }
-    </style>
+	#screenshotButton:hover, 
 
+	#start-cam-button:hover, 
 
+	#stop-cam-button:hover,
 
-    <script>
-    var video = document.querySelector("#videoElement");
+	#pic-download-button:hover{
 
-    var img = document.getElementById("imgtaken");
+		background: #fdbd4e;
 
-    var canvas = document.querySelector("canvas");
+		color: #ffffff;
 
-    var screenshotButton = document.getElementById("screenshotButton");
+		box-shadow: 2px 2px 5px grey;
 
-    var dlink = document.getElementById("dlink");
+		border: none;
 
+	}
 
+</style>
 
-    screenshotButton.onclick = video.onclick = function() {
 
-        canvas.width = video.videoWidth;
 
-        canvas.height = video.videoHeight;
+<script>
 
-        canvas.getContext('2d').drawImage(video, 0, 0);
+var video = document.querySelector("#videoElement");
 
-        // Other browsers will fall back to image/png
+var img = document.getElementById("imgtaken");
 
-        dataURL = canvas.toDataURL('image/png');
+var canvas = document.querySelector("canvas");
 
-        img.src = dataURL;
+var screenshotButton = document.getElementById("screenshotButton");
 
-        img.style.display = '';
+var dlink = document.getElementById("dlink");
 
-        setTimeout(function() {
-            img.style.display = 'none';
-        }, 5000);
 
-        dlink.href = dataURL;
 
-        dlink.style.display = '';
+screenshotButton.onclick = video.onclick = function() {
 
-    };
+  canvas.width = video.videoWidth;
 
+  canvas.height = video.videoHeight;
 
+  canvas.getContext('2d').drawImage(video, 0, 0);
 
+  // Other browsers will fall back to image/png
 
+  dataURL = canvas.toDataURL('image/png');
 
-    function startcam() {
+  img.src = dataURL;
+  
+  img.style.display='';
+  
+  setTimeout(function(){img.style.display='none';},5000);
 
-        if (navigator.mediaDevices.getUserMedia) {
+  dlink.href = dataURL;
 
-            navigator.mediaDevices.getUserMedia({
-                    video: true
-                })
+  dlink.style.display='';
 
-                .then(function(stream) {
+};
 
-                    video.srcObject = stream;
 
-                })
 
-                .catch(function(error) {
 
-                    console.log("Something went wrong!");
 
-                });
+function startcam(){
 
-        }
+if (navigator.mediaDevices.getUserMedia) {
 
-    }
+  navigator.mediaDevices.getUserMedia({ video: true })
 
+    .then(function (stream) {
 
+      video.srcObject = stream;
 
-    function stop(e) {
+    })
 
-        if (video.srcObject) {
+    .catch(function (error) {
 
-            var stream = video.srcObject;
+      console.log("Something went wrong!");
 
-            var tracks = stream.getTracks();
+    });
 
+}
 
+}
 
-            for (var i = 0; i < tracks.length; i++) {
 
-                var track = tracks[i];
 
-                track.stop();
+function stop(e) {
 
-            }
+    if(video.srcObject){
 
+  var stream = video.srcObject;
 
+  var tracks = stream.getTracks();
 
-            video.srcObject = null;
 
-        }
 
-    }
-    </script>
+  for (var i = 0; i < tracks.length; i++) {
 
+    var track = tracks[i];
 
+    track.stop();
 
-</div>
+  }
 
 
 
+  video.srcObject = null;
 
+}
 
+}
 
+</script>
 
+				
 
+	</div>
 
+				
 
+				
 
+				
 
+				
 
+				
 
+				
 
+				
 
 
 
@@ -2305,8 +2307,15 @@ div.divbottomdockhandup {
 
 
 
+				
 
-<div class="divbottomdockhandup" id="mango_send_image" align="center" style="display:none; 
+				<div class="divbottomdockhandup" 
+
+				id="mango_send_image" 
+
+				align="center" 
+
+				style="display:none; 
 
 				overflow-x:hidden;
 
@@ -2332,11 +2341,13 @@ div.divbottomdockhandup {
 
 				padding:10px">
 
+		
 
+						<div align="left"
 
-    <div align="left"
-        onClick="document.getElementById('mango_send_image').setAttribute('class','divdockhandup');setTimeout(function(){document.getElementById('mango_send_image').style.display='none';},2500)"
-        style="
+						onClick="document.getElementById('mango_send_image').setAttribute('class','divdockhandup');setTimeout(function(){document.getElementById('mango_send_image').style.display='none';},2500)" 
+
+						style="
 
 						width:100%; 
 
@@ -2350,39 +2361,63 @@ div.divbottomdockhandup {
 
 						margin-left:6%;">
 
-        &minus; &nbsp;&nbsp;
+						&minus; &nbsp;&nbsp;
 
-    </div>
+						</div>
 
+				
 
+				<style>
 
-    <style>
-    .hidden {
+				.hidden{
 
-        display: none;
+				display:none;
 
-    }
-    </style>
+				}
 
+				</style>
 
+				
 
-    <form method="post" action="fastupload.php" enctype="multipart/form-data">
+				<form method="post" 
 
-        <input type="hidden" name="chatref" id="img_chatref" />
+				action="fastupload.php" 
 
-        <input type="hidden" name="contact" id="img_contact" />
+				enctype="multipart/form-data">
 
-        <input type="file" name="fileToUpload" id="fileToUpload" class="hidden">
+					<input type="hidden" 
 
+					name="chatref" 
 
+					id="img_chatref"/>
 
+					<input type="hidden" 
 
+					name="contact" 
 
-        <div align="left">
+					id="img_contact"/>
 
-            Tap to add Photo
+					<input type="file" 
 
-            <table style="float:right; 
+					name="fileToUpload" 
+
+					id="fileToUpload" 
+
+					class="hidden">
+
+				
+
+				
+
+					<div align="left" 
+
+					>
+
+						Tap to add Photo
+
+					<table 
+
+					style="float:right; 
 
 					margin-top:-10px; 
 
@@ -2390,13 +2425,23 @@ div.divbottomdockhandup {
 
 					width:30%">
 
-                <tr style="vertical-align:middle" align="center">
+						<tr 
 
-                    <td style="width:40%" align="left">
+						style="vertical-align:middle" 
 
-                        <label for="fileToUpload">
+						align="center">
 
-                            <b style="
+							<td 
+
+							style="width:40%" 
+
+							align="left">
+
+								<label 
+
+								for="fileToUpload">
+
+									<b style="
 
 									font-size:13px;
 
@@ -2406,73 +2451,89 @@ div.divbottomdockhandup {
 
 									font-family:'Roboto Slab',serif;">
 
-                                Choose
+										Choose
 
-                            </b>
+									</b>
 
-                        </label>
+								</label>
 
-                    </td>
+							</td>
 
-                    <td style="
+							<td 
+
+							style="
 
 							width:60%">
 
-                        <input type="submit" id="send-image-input" value="Send Image" />
+								<input 
 
-                    </td>
+								type="submit" 
 
-                </tr>
+								id="send-image-input"
 
-            </table>
+								value="Send Image"/>
 
-        </div>
+				</td>
 
+				</tr>
 
+				</table>
 
-        <style>
-        #send-image-textarea {
-
-            width: 98%;
-
-            height: 30px;
-
-            font-size: 13px;
-
-            border-radius: 5px;
-
-            color: #fff;
-
-            background: #888889;
-
-            color: #ffffff;
-
-            border: 1px solid #E6E6E6;
-
-            cursor: pointer;
-
-        }
-
-        #send-image-textarea:hover {
-
-            background: #fdbd4e;
-
-            color: #ffffff;
-
-            box-shadow: 2px 2px 5px grey;
-
-            border: none;
-
-        }
-        </style>
+				</div>
 
 
 
-        <br>
+<style>
 
-        <div align="center">
+	#send-image-textarea{
 
-            <textarea name="piccaption" type="text" style="
+		width:98%; 
+
+		height:30px; 
+
+		font-size:13px; 
+
+		border-radius:5px; 
+
+		color:#fff; 
+
+		background:  #888889;
+
+		color:#ffffff;
+
+		border:1px solid #E6E6E6;
+
+		cursor:pointer;
+
+	}
+
+	#send-image-textarea:hover{
+
+		background: #fdbd4e;
+
+		color: #ffffff;
+
+		box-shadow: 2px 2px 5px grey;
+
+		border: none;
+
+	}
+
+</style>
+
+				
+
+				<br>
+
+					<div align="center">
+
+						<textarea
+
+						name="piccaption" 
+
+						type="text" 
+
+						style="
 
 						border:1px solid #E6E6E6; 
 
@@ -2490,51 +2551,61 @@ div.divbottomdockhandup {
 
 						height:70px; 
 
-						width:100%" maxlength="1000" placeholder="caption..."></textarea>
+						width:100%" 
 
-        </div>
+						maxlength="1000" 
 
+						placeholder="caption..."
 
+					></textarea>
 
+				</div>
 
+				
 
-    </form>
+				
 
+				</form>
 
+				
 
-</div>
-
-
-
-
-
-
-
-
+				</div>
 
 
 
 
 
+				
 
+				
 
+				
 
+				
 
+				
 
+				
 
+				
 
+				
 
+				
 
+				
 
+				
 
+				
 
+				
 
+				<div class="divbottomdockhandup" id="mango_send_video" 
 
+				align="center" 
 
-
-
-
-<div class="divbottomdockhandup" id="mango_send_video" align="center" style="display:none; 
+				style="display:none; 
 
 				overflow-x:hidden;
 
@@ -2560,11 +2631,13 @@ div.divbottomdockhandup {
 
 				padding:10px">
 
+		
 
+					<div align="left" 
 
-    <div align="left"
-        onClick="document.getElementById('mango_send_video').setAttribute('class','divdockhandup');setTimeout(function(){document.getElementById('mango_send_video').style.display='none'},2500)"
-        style="width:100%; 
+					onClick="document.getElementById('mango_send_video').setAttribute('class','divdockhandup');setTimeout(function(){document.getElementById('mango_send_video').style.display='none'},2500)" 
+
+					style="width:100%; 
 
 						font-size:32px; 
 
@@ -2576,41 +2649,73 @@ div.divbottomdockhandup {
 
 						margin-left:6%;">
 
-        &minus; &nbsp;&nbsp;
+						&minus; &nbsp;&nbsp;
 
-    </div>
+					</div>
 
+				
 
+				
 
+				<style>
 
+				.hidden{
 
-    <style>
-    .hidden {
+				display:none;
 
-        display: none;
+				}
 
-    }
-    </style>
+				</style>
 
+				
 
+					<form 
 
-    <form method="post" action="fastupload1.php" enctype="multipart/form-data">
+					method="post" 
 
-        <input type="hidden" name="chatref1" id="vid_chatref" />
+					action="fastupload1.php" 
 
-        <input type="hidden" name="contact1" id="vid_contact" />
+					enctype="multipart/form-data">
 
-        <input type="file" name="fileToUpload1" id="fileToUpload1" class="hidden">
+						<input 
 
+						type="hidden" 
 
+						name="chatref1" 
 
+						id="vid_chatref"/>
 
+						<input 
 
-        <div align="left">
+						type="hidden" 
 
-            Tap to add Video
+						name="contact1" 
 
-            <table style="float:right; 
+						id="vid_contact"/>
+
+						<input 
+
+						type="file" 
+
+						name="fileToUpload1" 
+
+						id="fileToUpload1" 
+
+						class="hidden">
+
+									
+
+				
+
+					<div align="left" 
+
+					>
+
+						Tap to add Video
+
+						<table 
+
+					style="float:right; 
 
 					margin-top:-10px; 
 
@@ -2618,13 +2723,23 @@ div.divbottomdockhandup {
 
 					width:30%">
 
-                <tr style="vertical-align:middle" align="center">
+						<tr 
 
-                    <td style="width:40%" align="left">
+						style="vertical-align:middle" 
 
-                        <label for="fileToUpload1">
+						align="center">
 
-                            <b style="
+							<td 
+
+							style="width:40%" 
+
+							align="left">
+
+								<label 
+
+								for="fileToUpload1">
+
+									<b style="
 
 									font-size:13px;
 
@@ -2634,43 +2749,57 @@ div.divbottomdockhandup {
 
 									font-family:'Roboto',serif;">
 
-                                Choose
+										Choose
 
-                            </b>
+									</b>
 
-                        </label>
+								</label>
 
-                    </td>
+							</td>
 
-                    <td style="
+							<td 
+
+							style="
 
 							width:60%">
 
-                        <input type="submit" id="send-image-input" value="Send Video">
+								<input 
 
-                    </td>
+								type="submit" 
 
-                </tr>
+								id="send-image-input"
 
-            </table>
+								value="Send Video">
 
-        </div>
+							</td>
 
+						</tr>
 
+				</table>
 
+			</div>
 
+				
 
-        <br>
+				
 
-        <br>
+				<br>
 
+				<br>
 
+				
 
+				
 
+				<div align="center">
 
-        <div align="center">
+						<textarea
 
-            <textarea name="piccaption" type="text" style="
+						name="piccaption" 
+
+						type="text" 
+
+						style="
 
 						border:1px solid #E6E6E6; 
 
@@ -2688,35 +2817,45 @@ div.divbottomdockhandup {
 
 						height:70px; 
 
-						width:100%" maxlength="1000" placeholder="caption..."></textarea>
+						width:100%" 
 
-        </div>
+						maxlength="1000" 
 
+						placeholder="caption..."
 
+					></textarea>
 
+				</div>
 
+				
 
+				
 
+				
 
-    </form>
+				</form>
 
+				
 
-
-</div>
-
-
-
-
-
-
-
-
+				</div>
 
 
 
 
 
-<div class="divbottomdockhandup" id="mango_code" align="center" style="display:none; 
+				
+
+				
+
+				
+
+				
+
+				<div class="divbottomdockhandup" id="mango_code" 
+
+				align="center" 
+
+				style="display:none; 
 
 				overflow-y:auto; 
 
@@ -2742,121 +2881,112 @@ div.divbottomdockhandup {
 
 				padding:10px">
 
+		
 
+				<div align="right" onClick="document.getElementById('mango_code').setAttribute('class','divdockhandup');setTimeout(function(){document.getElementById('mango_code').style.display='none'},2500)" style="width:100%; font-size:32px; height:40px; border-bottom:1px #ddd solid; color:#fff; padding-top:5px">
 
-    <div align="right"
-        onClick="document.getElementById('mango_code').setAttribute('class','divdockhandup');setTimeout(function(){document.getElementById('mango_code').style.display='none'},2500)"
-        style="width:100%; font-size:32px; height:40px; border-bottom:1px #ddd solid; color:#fff; padding-top:5px">
+				&times; &nbsp;&nbsp;
 
-        &times; &nbsp;&nbsp;
+				</div>
 
-    </div>
+				
 
+				<br>
 
+				<span id="mango_loc"></span>
 
-    <br>
+				<br><br>
 
-    <span id="mango_loc"></span>
+				
 
-    <br><br>
+				
 
+			<style>
 
+       /* Set the size of the div element that contains the map */
 
+      #map {
 
+        height: 400px;  /* The height is 400 pixels */
 
-    <style>
-    /* Set the size of the div element that contains the map */
+        width: 100%;  /* The width is the width of the web page */
 
-    #map {
+       }
 
-        height: 400px;
-        /* The height is 400 pixels */
-
-        width: 100%;
-        /* The width is the width of the web page */
-
-    }
     </style>
 
-
+    
 
     <!--The div element for the map -->
 
     <div id="map"></div>
 
+    
 
+				 <script>
 
-    <script>
-    var lon;
+				 var lon;
 
-    var lat;
+				 var lat;
 
-    var x = document.getElementById("mango_loc");
+				 var x = document.getElementById("mango_loc");
 
-    x.innerHTML = "Location will show up here.";
-
-
-
-
-
-
-
-    // Initialize and add the map
-
-    function initMap() {
-
-        if (navigator.geolocation) {
-
-            navigator.geolocation.getCurrentPosition(showPosition);
-
-        } else {
-
-            x.innerHTML = "Geolocation is not supported by this browser.";
-
-        }
-
-
-
-        function showPosition(position) {
-            alert('kjk');
-            lon = position.coords.longitude;
-
-            lat = position.coords.latitude;
-
-            x.innerHTML = "Youre here : " + position.coords.latitude +
-
-                "," + position.coords.longitude;
-
-        }
+x.innerHTML="Location will show up here.";
 
 
 
 
 
-        // The location of Uluru
 
-        var uluru = {
-            lat: lat,
-            lng: lon
-        };
 
-        // The map, centered at Uluru
+// Initialize and add the map
 
-        var map = new google.maps.Map(
+function initMap() {
 
-            document.getElementById('map'), {
-                zoom: 4,
-                center: uluru
-            });
+      if (navigator.geolocation) {
 
-        // The marker, positioned at Uluru
+    navigator.geolocation.getCurrentPosition(showPosition);
 
-        var marker = new google.maps.Marker({
-            position: uluru,
-            map: map
-        });
+  } else {
 
-    }
+    x.innerHTML = "Geolocation is not supported by this browser.";
+
+  }
+
+    
+
+function showPosition(position) {
+alert('kjk');
+    lon=position.coords.longitude;
+
+    lat=position.coords.latitude;
+
+  x.innerHTML = "Youre here : " + position.coords.latitude +
+
+  "," + position.coords.longitude;
+
+}
+
+
+
+
+
+  // The location of Uluru
+
+  var uluru = {lat: lat, lng: lon};
+
+  // The map, centered at Uluru
+
+  var map = new google.maps.Map(
+
+      document.getElementById('map'), {zoom: 4, center: uluru});
+
+  // The marker, positioned at Uluru
+
+  var marker = new google.maps.Marker({position: uluru, map: map});
+
+}
+
     </script>
 
     <!--Load the API from the specified URL
@@ -2870,31 +3000,30 @@ div.divbottomdockhandup {
     -->
 
     <script defer
-        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAqpIzAZAWj1v3DUJTFb8cw8FZuqK6fqNs&callback=initMap">
+
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAqpIzAZAWj1v3DUJTFb8cw8FZuqK6fqNs&callback=initMap">
 
     </script>
 
+    
 
+				<br>
 
-    <br>
+				<br>
 
-    <br>
+				
 
+				
 
-
-
-
-    <input type="button"
-        style="width:100px; height:30px; font-size:13px; border-radius:3px; color:#fff; background:#000; border:1px #000 solid"
-        value="Send Location">
-
-
-
-</div>
+				<input type="button" style="width:100px; height:30px; font-size:13px; border-radius:3px; color:#fff; background:#000; border:1px #000 solid" value="Send Location">
 
 
 
+				</div>
 
+				
+
+				
 
 
 
@@ -2903,25 +3032,29 @@ div.divbottomdockhandup {
 
 
 <style>
-.mangocodes {
 
-    padding: 10px;
+.mangocodes{
 
-    color: #000;
+	padding:10px; 
 
-    font-size: 14px;
+	color:#000; 
 
-    width: 90%;
+	font-size:14px; 
 
-    border-bottom: 1px #ddd solid;
+	width:90%; 
 
-    background: #fff;
+	border-bottom:1px #ddd solid; 
 
-    font-family: 'Roboto Slab', serif;
+	background:#fff;
 
-    font-weight: 500;
+	font-family:'Roboto Slab',serif;
+
+	font-weight: 500;
 
 }
+
+
+
 </style>
 
 
@@ -2934,47 +3067,44 @@ div.divbottomdockhandup {
 
 
 <script type="text/javascript">
-function sendsubmit() {
 
+function sendsubmit(){
 
-    document.getElementById('convusermsg').value = document.getElementById('convusermsg_div').innerHTML;
+		
+			document.getElementById('convusermsg').value=document.getElementById('convusermsg_div').innerHTML;
 
+			
 
+			var a = document.getElementById('convuser').value;
 
-    var a = document.getElementById('convuser').value;
+			var b = document.getElementById('convusermsg').value;
 
-    var b = document.getElementById('convusermsg').value;
+			var c = document.getElementById('convref').value;
 
-    var c = document.getElementById('convref').value;
+			
+	
 
+$.ajax({
 
+			type:'POST',
 
+			url:'sendmsg.php',
 
-    $.ajax({
+			dataType:'html',
 
-        type: 'POST',
+			data:{convuser:a,convusermsg:b,convref:c},
 
-        url: 'sendmsg.php',
+			cache:false,
 
-        dataType: 'html',
+			success: function(response){
+			    
+			refreshing('<?php echo number; ?>');
 
-        data: {
-            convuser: a,
-            convusermsg: b,
-            convref: c
-        },
+			document.getElementById('convusermsg_div').innerHTML='Type your message here...';
 
-        cache: false,
+			}
 
-        success: function(response) {
-
-            refreshing('<?php echo number; ?>');
-
-            document.getElementById('convusermsg_div').innerHTML = 'Type your message here...';
-
-        }
-
-    });
+			});
 
 
 }
@@ -2985,67 +3115,64 @@ var ar;
 
 
 
-function refreshing(e) {
+function refreshing(e){
 
-    if ($.active == 0) {
+if($.active==0){
 
-        $.ajax({
+    $.ajax({
 
-            type: 'POST',
+			type:'POST',
 
-            url: 'refresh.php',
+			url:'refresh.php',
 
-            dataType: 'html',
+			dataType:'html',
 
-            data: {
-                user: e
-            },
+			data:{user:e},
 
-            cache: false,
+			cache:false,
 
-            success: function(response) {
-                document.getElementById('drawernotify').innerHTML = response;
+			success: function(response){
+			document.getElementById('drawernotify').innerHTML=response;
 
-                if (!("Notification" in window)) {
+	 if (!("Notification" in window)) {
 
-                    if (ar !== response) {
-                        document.getElementById('notifyicon').style.color = '#fc0';
-                        document.getElementById('drawernotify').style.display = '';
-                        ar = response;
-
-                    }
-                } else {
-                    if (ar !== response) {
-                        document.getElementById('notifyicon').style.color = '#fc0';
-                        document.getElementById('drawernotify').style.display = '';
-                        //	shootNotification(response,'img/profile.png','Notifications');
-
-                        ar = response;
-
-                    }
-
-                }
-
-
-
-            }
-
-        });
-
-
-
-    }
+	if(ar!==response){
+	    document.getElementById('notifyicon').style.color='#fc0';
+			document.getElementById('drawernotify').style.display='';
+			ar=response;
 
 }
+  }else{
+	if(ar!==response){
+	    document.getElementById('notifyicon').style.color='#fc0';
+document.getElementById('drawernotify').style.display='';
+		//	shootNotification(response,'img/profile.png','Notifications');
+
+			ar=response;
+
+	}
+
+  }
+
+		
+
+			}
+
+			});
+
+	
+
+}
+
+			}
 
 
 
 var e = '<?php echo number; ?>';
 
-setInterval(function() {
-    refreshing(e);
-}, 3000);
-</script>
+setInterval(function(){refreshing(e);},3000);			
+
+			</script>
 
 
 
@@ -3063,3 +3190,4 @@ setInterval(function() {
 </div>
 
 </div>
+

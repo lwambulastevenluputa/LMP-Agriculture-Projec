@@ -49,7 +49,6 @@ $query2="SELECT * FROM mango_chats WHERE (username='".number."' OR contact='".nu
 							style="margin-bottom:70px; 
 							padding-bottom:70px">
 							
-							
 									<?php
 					$strt=0;				
 					$query5="SELECT * FROM mango_conversations WHERE ref='$a'";

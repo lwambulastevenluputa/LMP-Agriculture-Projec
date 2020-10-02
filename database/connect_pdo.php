@@ -7,8 +7,8 @@
 */
 
     $servername = "localhost";
-    $username = "root";
-    $password = "";
+    $username = "u863218974_root";
+    $password = "Rootadmin247";
     $dbname = "u863218974_mango";
     
     try {
@@ -20,3 +20,5 @@
     } catch(PDOException $e) {
         echo "Database connection failed: " . $e->getMessage();
     }
+    
+?>

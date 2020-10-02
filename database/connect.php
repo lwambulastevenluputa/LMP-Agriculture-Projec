@@ -7,8 +7,8 @@
 */
     
     $servername = "localhost";
-    $username = "root";
-    $password = "";
+    $username = "u863218974_root";
+    $password = "Rootadmin247";
     $dbname = "u863218974_mango";
     
     /************* Procedural ****************/ 
@@ -23,3 +23,7 @@
        echo 'Error message: ' . mysqli_connect_error() . '<br>';
        die();
     }
+
+?>
+
+

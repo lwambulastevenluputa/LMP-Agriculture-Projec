@@ -1,5 +1,5 @@
 <?php 
-// session_start();
+session_start();
 $uphone=$_SESSION['mobilenumber'];
 
     // create a database connection
@@ -42,3 +42,5 @@ $uphone=$_SESSION['mobilenumber'];
 
     // $back_to_add_product_form = "location: ../add_product.php?msg=". $msg;
     // header($back_to_add_product_form);
+
+?>

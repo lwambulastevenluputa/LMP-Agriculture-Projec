@@ -4,7 +4,7 @@
     $servername = "localhost";
     $username = "root";
     $password = "";
-    $dbname = "u863218974_mango";
+    $dbname = "dashboard-sales-management";
 
     // create connection
     $conn = mysqli_connect("$servername", "$username", "", "$dbname");
@@ -23,3 +23,5 @@
     // if($conn->connect_error) {
     //     die("Connection Failed!".$conn->connect_error);
     // }
+    
+?>

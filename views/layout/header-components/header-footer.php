@@ -34,3 +34,33 @@ if(isset($_SESSION['mobilenumber'])){ ?>
 		</div> -->
 	</div>
 </div><!--/header-bottom-->
+
+
+
+
+<script type="text/javascript">
+//load first time
+
+function loadsearch(a){
+var b = document.getElementById('inputsearchterm').value;
+    $.ajax({
+
+			type:'POST',
+
+			url:'productdata.php',
+
+			dataType:'html',
+
+			data:{user:a,searchterm:b},
+
+			cache:false,
+
+			success: function(response){
+			document.getElementById('result').innerHTML=response;
+
+}
+});
+
+}
+
+</script>

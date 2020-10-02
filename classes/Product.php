@@ -3,8 +3,8 @@ class Product {
     // database credentials
     
 	private $host  = 'localhost';
-    private $user  = 'root';
-    private $password   = "";
+    private $user  = 'u863218974_root';
+    private $password   = "Rootadmin247";
     private $database  = "u863218974_mango";
     // database connection
     private $dbConnect = false;
@@ -122,3 +122,4 @@ class Product {
 		return $searchResultHTML;	
 	}	
 }
+?>
