@@ -77,13 +77,13 @@ padding-top: 20px;
 padding-left: 10%;
 padding-right: 10%;
 width: 100%;
-font-family: 'Roboto Slab', serif;
+font-family: 'Marmelad', sans-serif;;
 font-weight: 300;
     font-size: 30px;
     color: black;">
-    <p>Transact instantly and share money with your loved ones wherever they are in the world, 
-        track your transferes get a transaction statement. Pay your bills and cable TV without delay, 
+    <p>Transact instantly and share money with your loved ones wherever they are in the world,
+        track your transferes get a transaction statement. Pay your bills and cable TV without delay,
         buy airtime & data and even have full access to your Mango Wallet.
-        </p>
+    </p>
 </div>
 <hr>

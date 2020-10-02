@@ -1,20 +1,25 @@
-<div class="header-bottom"><!--header-bottom-->
-	<div class="container">
+<div class="header-bottom">
+    <!--header-bottom-->
+    <div class="container">
         <ul class="unstyled categories-link d-flex justify-content-center">
-            <?php 
-if(isset($_SESSION['mobilenumber'])){ ?>
-            <li><a href="#" onclick="document.getElementById('drawerbg').style.display='';document.getElementById('drawer1').style.display='';">Chat</a></li>
-			<li><a href="#" onclick="document.getElementById('drawerbg').style.display='';document.getElementById('drawer2').style.display='';document.getElementById('drawer3').style.display='';">Contacts</a></li>
-			<?php
-}
-?>
+            <?php
+			if (isset($_SESSION['mobilenumber'])) { ?>
+            <li><a href="#"
+                    onclick="document.getElementById('drawerbg').style.display='';document.getElementById('drawer1').style.display='';">Chat</a>
+            </li>
+            <li><a href="#"
+                    onclick="document.getElementById('drawerbg').style.display='';document.getElementById('drawer2').style.display='';document.getElementById('drawer3').style.display='';">Contacts</a>
+            </li>
+            <?php
+			}
+			?>
             <li><a href="#">Vendors</a></li>
             <li><a href="#">Fruits & Vegetables</a></li>
             <li><a href="#">Livestock</a></li>
             <li><a href="#">Poultry</a></li>
             <li><a href="#">Fish</a></li>
         </ul>
-		<!-- <div class="row">
+        <!-- <div class="row">
 			<div class="col-sm-9">
                 <div class="shop-menu pull-left">
 					<ul class="nav">
@@ -32,35 +37,6 @@ if(isset($_SESSION['mobilenumber'])){ ?>
 				</div>
 			</div>
 		</div> -->
-	</div>
-</div><!--/header-bottom-->
-
-
-
-
-<script type="text/javascript">
-//load first time
-
-function loadsearch(a){
-var b = document.getElementById('inputsearchterm').value;
-    $.ajax({
-
-			type:'POST',
-
-			url:'productdata.php',
-
-			dataType:'html',
-
-			data:{user:a,searchterm:b},
-
-			cache:false,
-
-			success: function(response){
-			document.getElementById('result').innerHTML=response;
-
-}
-});
-
-}
-
-</script>
+    </div>
+</div>
+<!--/header-bottom-->

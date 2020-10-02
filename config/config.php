@@ -14,9 +14,9 @@
  * DB_PASS: the password of the above user
  */
 define("DB_HOST", "localhost");
-define("DB_USER", "u863218974_root");
+define("DB_USER", "root");
 define("DB_NAME", "u863218974_mango");
-define("DB_PASS", "Rootadmin247");
+define("DB_PASS", "");
 
 
 /**

@@ -1,9 +1,9 @@
 <?php 
 
-    $servername = "localhost";
-    $username = "u863218974_root";
-    $password = "Rootadmin247";
-    $dbname = "u863218974_mango";
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "u863218974_mango";
 
      /********** Object Oriented *************/ 
     $conn = new mysqli("$servername", "$username", "$password", "$dbname");
@@ -24,4 +24,3 @@
     //    echo 'Error message: ' . mysqli_connect_error() . '<br>';
     //    die();
     // }
-?>

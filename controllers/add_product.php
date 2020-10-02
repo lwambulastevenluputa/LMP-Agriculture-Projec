@@ -1,6 +1,4 @@
 <?php 
-session_start();
-$uphone=$_SESSION['mobilenumber'];
 
     // create a database connection
     include 'database/connect.php';
@@ -42,5 +40,3 @@ $uphone=$_SESSION['mobilenumber'];
 
     // $back_to_add_product_form = "location: ../add_product.php?msg=". $msg;
     // header($back_to_add_product_form);
-
-?>

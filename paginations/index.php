@@ -1,11 +1,11 @@
-<?php 
+<?php
 
 //database connection
 require_once 'database/connect_pdo.php';
 
 // Set session
 session_start();
-if(isset($_POST['records-limit'])){
+if (isset($_POST['records-limit'])) {
     $_SESSION['records-limit'] = $_POST['records-limit'];
 }
 
@@ -15,14 +15,14 @@ $limit = isset($_SESSION['records-limit']) ? $_SESSION['records-limit'] : 5;
 // Get total records
 $sql = $connection->query("SELECT count(id) AS id FROM authors")->fetchAll();
 $allRecrods = $sql[0]['id'];
-  
+
 // Calculate total pages
 $totoalPages = ceil($allRecrods / $limit);
 
 $limit = isset($_SESSION['records-limit']) ? $_SESSION['records-limit'] : 5;
 
 // Current pagination page number
-$page = (isset($_GET['page']) && is_numeric($_GET['page']) ) ? $_GET['page'] : 1;
+$page = (isset($_GET['page']) && is_numeric($_GET['page'])) ? $_GET['page'] : 1;
 
 // Offset
 $paginationStart = ($page - 1) * $limit;
@@ -38,6 +38,7 @@ $next = $page + 1;
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -45,15 +46,16 @@ $next = $page + 1;
     <title>PHP Pagination Example</title>
     <title>Pagination in PHP</title>
     <style>
-        .container {
-            max-width: 1000px
-        }
+    .container {
+        max-width: 1000px
+    }
 
-        .custom-select {
-            max-width: 150px
-        }
+    .custom-select {
+        max-width: 150px
+    }
     </style>
 </head>
+
 <body>
     <div class="container mt-5">
         <h2 class="text-center mb-5">Simple PHP Pagination Demo</h2>
@@ -64,9 +66,9 @@ $next = $page + 1;
             <form action="index.php" method="post">
                 <select name="records-limit" id="records-limit" class="custom-select">
                     <option disabled selected>Records Limit</option>
-                    <?php foreach([5,7,10,12] as $limit) : ?>
+                    <?php foreach ([5, 7, 10, 12] as $limit) : ?>
                     <option
-                        <?php if(isset($_SESSION['records-limit']) && $_SESSION['records-limit'] == $limit) echo 'selected'; ?>
+                        <?php if (isset($_SESSION['records-limit']) && $_SESSION['records-limit'] == $limit) echo 'selected'; ?>
                         value="<?= $limit; ?>">
                         <?= $limit; ?>
                     </option>
@@ -87,7 +89,7 @@ $next = $page + 1;
                 </tr>
             </thead>
             <tbody>
-                <?php foreach($authors as $author): ?>
+                <?php foreach ($authors as $author) : ?>
                 <tr>
                     <th scope="row"><?php echo $author['id']; ?></th>
                     <td><?php echo $author['first_name']; ?></td>
@@ -102,20 +104,32 @@ $next = $page + 1;
         <!-- Pagination -->
         <nav aria-label="Page navigation example mt-5">
             <ul class="pagination justify-content-center">
-                <li class="page-item <?php if($page <= 1){ echo 'disabled'; } ?>">
-                    <a class="page-link"
-                        href="<?php if($page <= 1){ echo '#'; } else { echo "?page=" . $prev; } ?>">Previous</a>
+                <li class="page-item <?php if ($page <= 1) {
+                                            echo 'disabled';
+                                        } ?>">
+                    <a class="page-link" href="<?php if ($page <= 1) {
+                                                    echo '#';
+                                                } else {
+                                                    echo "?page=" . $prev;
+                                                } ?>">Previous</a>
                 </li>
 
-                <?php for($i = 1; $i <= $totoalPages; $i++ ): ?>
-                <li class="page-item <?php if($page == $i) {echo 'active'; } ?>">
+                <?php for ($i = 1; $i <= $totoalPages; $i++) : ?>
+                <li class="page-item <?php if ($page == $i) {
+                                                echo 'active';
+                                            } ?>">
                     <a class="page-link" href="index.php?page=<?= $i; ?>"> <?= $i; ?> </a>
                 </li>
                 <?php endfor; ?>
 
-                <li class="page-item <?php if($page >= $totoalPages) { echo 'disabled'; } ?>">
-                    <a class="page-link"
-                        href="<?php if($page >= $totoalPages){ echo '#'; } else {echo "?page=". $next; } ?>">Next</a>
+                <li class="page-item <?php if ($page >= $totoalPages) {
+                                            echo 'disabled';
+                                        } ?>">
+                    <a class="page-link" href="<?php if ($page >= $totoalPages) {
+                                                    echo '#';
+                                                } else {
+                                                    echo "?page=" . $next;
+                                                } ?>">Next</a>
                 </li>
             </ul>
         </nav>
@@ -124,7 +138,8 @@ $next = $page + 1;
     <!-- jQuery + Bootstrap JS -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
-    
-    
+
+
 </body>
+
 </html>

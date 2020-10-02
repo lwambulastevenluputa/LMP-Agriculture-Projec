@@ -24,4 +24,3 @@ $result1=mysqli_query($connect,$sql_query1);
 
 
 }
-?>

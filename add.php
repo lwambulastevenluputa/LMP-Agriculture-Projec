@@ -9,7 +9,7 @@
         $pimage = $_POST['pimage'];
         $pcode = $_POST['pcode'];
         $pqty = 1;
-    
+
         $stmt = $conn->prepare("SELECT product_code FROM cart WHERE product_code=?");
         $stmt->bind_param("s", $pcode);
         $stmt->execute();
@@ -38,5 +38,3 @@
         }
 
     }
-
-?>

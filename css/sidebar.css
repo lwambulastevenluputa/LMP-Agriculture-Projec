@@ -3,9 +3,8 @@
  *  Aside
  * =======================================
  */
- h2.title {
-    color: #FE980F;
-    font-family: 'Roboto', sans-serif;
+h2.title {
+
     font-size: 18px;
     font-weight: 700;
     margin: 0 15px;
@@ -14,12 +13,11 @@
     position: relative;
 }
 
-.left-sidebar h2, .brands-products h2 {
-    color: #FE980F;
-    font-family: 'Roboto', sans-serif;
+.left-sidebar h2,
+.brands-products h2 {
     font-size: 18px;
     font-weight: 700;
-    margin: 0 auto 32px;
+    margin: 0 auto 15px;
     text-align: left;
     text-transform: uppercase;
     position: relative;
@@ -50,7 +48,7 @@
 
 .category-products .panel-default .panel-heading .panel-title a {
     color: #696763;
-    font-family: 'Roboto', sans-serif;
+    /* font-family: 'Roboto', sans-serif; */
     font-size: 14px;
     text-decoration: none;
     text-transform: uppercase;
@@ -69,7 +67,7 @@
 .brands-name .nav-stacked li a {
     background-color: #FFFFFF;
     color: #696763;
-    font-family: 'Roboto', sans-serif;
+    /* font-family: 'Roboto', sans-serif; */
     font-size: 14px;
     padding: 10px 25px;
     text-decoration: none;
@@ -86,4 +84,10 @@
     padding: .75rem 1.25rem;
     background-color: #fff;
     border: 1px solid transparent;
+}
+
+@media screen and (max-width:1000px) {
+    .left-sidebar {
+        display: none;
+    }
 }

@@ -71,5 +71,3 @@
     	echo "Sign up was not successful<br />";
     	echo mysqli_error ($connect);
     }
-
-?>

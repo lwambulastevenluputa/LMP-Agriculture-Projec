@@ -1,11 +1,11 @@
-<?php 
+<?php
 
 //database connection
 require_once 'database/connect_pdo.php';
 
 // Set session
 session_start();
-if(isset($_POST['records-limit'])){
+if (isset($_POST['records-limit'])) {
     $_SESSION['records-limit'] = $_POST['records-limit'];
 }
 
@@ -16,12 +16,12 @@ $results_per_page = isset($_SESSION['records-limit']) ? $_SESSION['records-limit
 // Get total records [find out the number of results(rows) stored in database]
 $query = $conn->query("SELECT count(id) AS id FROM authors")->fetchAll();
 $number_of_records = $query[0]['id'];
-  
+
 // Calculate total pages [determine number of total pages available]
 $number_of_pages = ceil($number_of_records / $results_per_page);
 
 // Current pagination page number [determine which page number visitor is currenct on]
-$page = (isset($_GET['page']) && is_numeric($_GET['page']) ) ? $_GET['page'] : 1;
+$page = (isset($_GET['page']) && is_numeric($_GET['page'])) ? $_GET['page'] : 1;
 // if (!isset($_GET['page'])) {
 //     $page = 1;
 // } else {
@@ -42,6 +42,7 @@ $authors = $conn->query("SELECT * FROM authors LIMIT $paginationStart, $results_
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -49,15 +50,16 @@ $authors = $conn->query("SELECT * FROM authors LIMIT $paginationStart, $results_
     <title>PHP Pagination Example</title>
     <title>Pagination in PHP</title>
     <style>
-        .container {
-            max-width: 1000px
-        }
+    .container {
+        max-width: 1000px
+    }
 
-        .custom-select {
-            max-width: 150px
-        }
+    .custom-select {
+        max-width: 150px
+    }
     </style>
 </head>
+
 <body>
     <div class="container mt-5">
         <h2 class="text-center mb-5">Pagination Demo</h2>
@@ -68,9 +70,9 @@ $authors = $conn->query("SELECT * FROM authors LIMIT $paginationStart, $results_
             <form action="index.php" method="post">
                 <select name="records-limit" id="records-limit" class="custom-select">
                     <option disabled selected>Records Limit</option>
-                    <?php foreach([5,7,10,12] as $limit) : ?>
+                    <?php foreach ([5, 7, 10, 12] as $limit) : ?>
                     <option
-                        <?php if(isset($_SESSION['records-limit']) && $_SESSION['records-limit'] == $limit) echo 'selected'; ?>
+                        <?php if (isset($_SESSION['records-limit']) && $_SESSION['records-limit'] == $limit) echo 'selected'; ?>
                         value="<?= $limit; ?>">
                         <?= $limit; ?>
                     </option>
@@ -91,7 +93,7 @@ $authors = $conn->query("SELECT * FROM authors LIMIT $paginationStart, $results_
                 </tr>
             </thead>
             <tbody>
-                <?php foreach($authors as $author): ?>
+                <?php foreach ($authors as $author) : ?>
                 <tr>
                     <th scope="row"><?php echo $author['id']; ?></th>
                     <td><?php echo $author['first_name']; ?></td>
@@ -106,20 +108,32 @@ $authors = $conn->query("SELECT * FROM authors LIMIT $paginationStart, $results_
         <!-- Pagination -->
         <nav aria-label="Page navigation example mt-5">
             <ul class="pagination justify-content-center">
-                <li class="page-item <?php if($page <= 1){ echo 'disabled'; } ?>">
-                    <a class="page-link"
-                        href="<?php if($page <= 1){ echo '#'; } else { echo "?page=" . $prev; } ?>">Previous</a>
+                <li class="page-item <?php if ($page <= 1) {
+                                            echo 'disabled';
+                                        } ?>">
+                    <a class="page-link" href="<?php if ($page <= 1) {
+                                                    echo '#';
+                                                } else {
+                                                    echo "?page=" . $prev;
+                                                } ?>">Previous</a>
                 </li>
 
-                <?php for($i = 1; $i <= $number_of_pages; $i++ ): ?>
-                <li class="page-item <?php if($page == $i) {echo 'active'; } ?>">
+                <?php for ($i = 1; $i <= $number_of_pages; $i++) : ?>
+                <li class="page-item <?php if ($page == $i) {
+                                                echo 'active';
+                                            } ?>">
                     <a class="page-link" href="index1.php?page=<?= $i; ?>"> <?= $i; ?> </a>
                 </li>
                 <?php endfor; ?>
 
-                <li class="page-item <?php if($page >= $number_of_pages) { echo 'disabled'; } ?>">
-                    <a class="page-link"
-                        href="<?php if($page >= $number_of_pages){ echo '#'; } else {echo "?page=". $next; } ?>">Next</a>
+                <li class="page-item <?php if ($page >= $number_of_pages) {
+                                            echo 'disabled';
+                                        } ?>">
+                    <a class="page-link" href="<?php if ($page >= $number_of_pages) {
+                                                    echo '#';
+                                                } else {
+                                                    echo "?page=" . $next;
+                                                } ?>">Next</a>
                 </li>
             </ul>
         </nav>
@@ -129,12 +143,13 @@ $authors = $conn->query("SELECT * FROM authors LIMIT $paginationStart, $results_
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
     <script>
-        $(document).ready(function () {
-            $('#records-limit').change(function () {
-                $('form').submit();
-            })
-        });
+    $(document).ready(function() {
+        $('#records-limit').change(function() {
+            $('form').submit();
+        })
+    });
     </script>
-    
+
 </body>
+
 </html>

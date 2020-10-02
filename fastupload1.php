@@ -15,7 +15,7 @@ if(isset($number) && isset($_POST['chatref1']) && isset($_POST['contact1'])){
 if(isset($_FILES["fileToUpload1"]["name"])){
 $cref=$_POST['chatref1'];
 $cont=$_POST['contact1'];
- 
+
 $target_dir="uploads/";
 $ref=date('ymdhis');
 $target_file=$target_dir.$ref.basename($_FILES["fileToUpload1"]["name"]);
@@ -83,6 +83,3 @@ header('location: index.php?viduplerorr');
 }
 }
 }
-?>
-
-
